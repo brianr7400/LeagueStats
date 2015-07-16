@@ -1,0 +1,10 @@
+D:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\LeagueStats.exe.config
+D:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\LeagueStats.exe
+D:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\LeagueStats.pdb
+D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.csprojResolveAssemblyReference.cache
+D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.LeagueStats.resources
+D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.Properties.Resources.resources
+D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.csproj.GenerateResource.Cache
+D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.exe
+D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.pdb
+D:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\Newtonsoft.Json.dll
