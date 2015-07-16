@@ -16,8 +16,6 @@ namespace LeagueStats
     public partial class LeagueStats : Form
     {
         #region Global Variables
-
-        static string _apikey = "c19aabb4-0d8e-44c1-ae83-4b03249382e9";
         static string SummonerName;
         //creates instances of the user classes
         static User_basic currentUser = new User_basic();
@@ -194,7 +192,7 @@ namespace LeagueStats
 
         #endregion
 
-
+        static string _apikey = "c19aabb4-0d8e-44c1-ae83-4b03249382e9";
     }
     public class User_basic
     {
