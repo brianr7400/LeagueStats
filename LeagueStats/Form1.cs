@@ -11,6 +11,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+
 namespace LeagueStats
 {
     public partial class LeagueStats : Form
@@ -119,7 +120,7 @@ namespace LeagueStats
 
         //Called when the search button is pressed
         #region Search
-        public static void Search()
+        public static void Search(TextBox searchBox, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
         {
             //Gets summoner name
             _SummonerName = searchBox.Text.ToLower();
@@ -132,6 +133,7 @@ namespace LeagueStats
 
                 //Displays the data using the Display method
                 Display_Overview(iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+
             }
             catch
             {
@@ -208,7 +210,7 @@ namespace LeagueStats
         #region Form Controlls
         private void searchButton_Click(object sender, EventArgs e)
         {
-            Search();
+            Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
         }
 
         //Accepts enter key for searching
