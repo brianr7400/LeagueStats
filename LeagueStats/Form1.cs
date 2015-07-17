@@ -230,7 +230,7 @@ namespace LeagueStats
         #region MenuStrip
         private void meToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string AboutMessage = String.Format("LeagueStats\r\nCreatd By Brian Richardson");
+            string AboutMessage = String.Format("LeagueStats\r\nCreatd By Brian Richardson AKA FoodIsBeast");
             MessageBox.Show(AboutMessage);
         }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
