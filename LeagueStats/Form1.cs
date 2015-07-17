@@ -15,7 +15,19 @@ namespace LeagueStats
 {
     public partial class LeagueStats : Form
     {
+        //Startup
+        public LeagueStats()
+        {
+            InitializeComponent();
+
+            //Colors everything
+            this.BackColor = Color.FromArgb(13, 98, 162);
+            searchBox.BackColor = Color.FromArgb(13, 98, 162);
+            regionBox.BackColor = Color.FromArgb(13, 98, 162);
+        }
+
         #region Global Variables
+
         static string _datadragonVersion = "5.13.1";
         static string _SummonerName;
         //creates instances of the user classes
@@ -24,16 +36,11 @@ namespace LeagueStats
         static User_ranked rankUser = new User_ranked();
 
         #endregion
-        public LeagueStats()
-        {
-            InitializeComponent();
-            //Colors everything
-            this.BackColor = Color.FromArgb(13, 98, 162);
-            searchBox.BackColor = Color.FromArgb(13, 98, 162);
-            regionBox.BackColor = Color.FromArgb(13, 98, 162);
-        }
 
-        #region methods
+        #region Methods
+        //Calls for data from servers
+
+        #region CallAPI
         //Gets basic info like name & level
         public static void CallAPI_basic()
         {
@@ -107,8 +114,38 @@ namespace LeagueStats
             }
 
         }
+
+        #endregion
+
+        //Called when the search button is pressed
+        #region Search
+        public static void Search()
+        {
+            //Gets summoner name
+            _SummonerName = searchBox.Text.ToLower();
+            try
+            {
+                //Runs the CallAPI_basic method
+                CallAPI_basic();
+                //Runs the CallAPI_ranked method if currentUser level == 30
+                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); }
+
+                //Displays the data using the Display method
+                Display_Overview(iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+            }
+            catch
+            {
+                MessageBox.Show("There was an error. Perhaps try another username");
+            }
+        }
+        #endregion
+
+        //Displays Data
+        #region Display
+        
         public static void Display_Overview(PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
         {
+
     //STARTUP
             //Resets the displayed items
             iconBox.Visible = false;
@@ -166,30 +203,14 @@ namespace LeagueStats
         }
         #endregion
 
+        #endregion
+
         #region Form Controlls
         private void searchButton_Click(object sender, EventArgs e)
         {
-            //Gets summoner name
-            _SummonerName = searchBox.Text.ToLower();
-            try
-            {
-                //Runs the CallAPI_basic method
-                CallAPI_basic();
-                //Runs the CallAPI_ranked method if currentUser level == 30
-                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); }
-
-                //Displays the data using the Display method
-                Display_Overview(iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
-            }
-            catch
-            {
-                MessageBox.Show("There was an error. Perhaps try another username");
-            }
-
-
-
-
+            Search();
         }
+
         //Accepts enter key for searching
         private void searchBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -224,8 +245,8 @@ namespace LeagueStats
 
         static string _apikey = "c19aabb4-0d8e-44c1-ae83-4b03249382e9";
     }
-
     //Bases for Users
+    #region Users
     public class User_basic
     {
         public string id;
@@ -243,4 +264,6 @@ namespace LeagueStats
         public string league;
         public string leaguePoints;
     }
+
+#endregion
 }
