@@ -35,6 +35,11 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.meToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.overviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.matchHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchButton = new System.Windows.Forms.Button();
             this.regionBox = new System.Windows.Forms.ComboBox();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -55,7 +60,8 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.viewToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(704, 24);
@@ -99,6 +105,41 @@
             this.updatesToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.updatesToolStripMenuItem.Text = "Updates";
             this.updatesToolStripMenuItem.Click += new System.EventHandler(this.updatesToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.overviewToolStripMenuItem,
+            this.statsToolStripMenuItem,
+            this.matchHistoryToolStripMenuItem,
+            this.graphsToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // overviewToolStripMenuItem
+            // 
+            this.overviewToolStripMenuItem.Name = "overviewToolStripMenuItem";
+            this.overviewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.overviewToolStripMenuItem.Text = "Overview";
+            // 
+            // statsToolStripMenuItem
+            // 
+            this.statsToolStripMenuItem.Name = "statsToolStripMenuItem";
+            this.statsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statsToolStripMenuItem.Text = "Stats";
+            // 
+            // matchHistoryToolStripMenuItem
+            // 
+            this.matchHistoryToolStripMenuItem.Name = "matchHistoryToolStripMenuItem";
+            this.matchHistoryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.matchHistoryToolStripMenuItem.Text = "Match History";
+            // 
+            // graphsToolStripMenuItem
+            // 
+            this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.graphsToolStripMenuItem.Text = "Graphs";
             // 
             // searchButton
             // 
@@ -288,6 +329,11 @@
         private System.Windows.Forms.Label winlossLabel;
         private System.Windows.Forms.Label rankLabel;
         private System.Windows.Forms.Label lpLabel;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem overviewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem statsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem matchHistoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem graphsToolStripMenuItem;
     }
 }
 

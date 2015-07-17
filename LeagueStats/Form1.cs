@@ -16,8 +16,10 @@ namespace LeagueStats
     public partial class LeagueStats : Form
     {
         #region Global Variables
-        static string SummonerName;
+        static string _datadragonVersion = "5.13.1";
+        static string _SummonerName;
         //creates instances of the user classes
+
         static User_basic currentUser = new User_basic();
         static User_ranked rankUser = new User_ranked();
 
@@ -40,20 +42,20 @@ namespace LeagueStats
             using (var Client = new WebClient())
             {
                 //Gets Summoner information | name, id, profileIconId, summonerLevel, revisionDate
-                string url = ("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + SummonerName.Replace(" ", "%20") + "?api_key=" + _apikey);
+                string url = ("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + _SummonerName.Replace(" ", "%20") + "?api_key=" + _apikey);
                 var SummonerData = Client.DownloadString(url);
 
                 //Puts summoner information into json
                 JObject jsonSummonerData = JObject.Parse(SummonerData);
-                //Removes spaces from variable SummonerName 
-                SummonerName = SummonerName.Replace(" ", "");
+                //Removes spaces from variable _SummonerName 
+                _SummonerName = _SummonerName.Replace(" ", "");
 
                 //Sets currentusers properties to the correct json ones;
-                currentUser.name = (string)(jsonSummonerData[SummonerName]["name"]);
-                currentUser.id = (string)(jsonSummonerData[SummonerName]["id"]);
-                currentUser.profileIconId = (string)(jsonSummonerData[SummonerName]["profileIconId"]);
-                currentUser.summonerLevel = (string)(jsonSummonerData[SummonerName]["summonerLevel"]);
-                currentUser.revisionDate = (string)(jsonSummonerData[SummonerName]["revisionDate"]);
+                currentUser.name = (string)(jsonSummonerData[_SummonerName]["name"]);
+                currentUser.id = (string)(jsonSummonerData[_SummonerName]["id"]);
+                currentUser.profileIconId = (string)(jsonSummonerData[_SummonerName]["profileIconId"]);
+                currentUser.summonerLevel = (string)(jsonSummonerData[_SummonerName]["summonerLevel"]);
+                currentUser.revisionDate = (string)(jsonSummonerData[_SummonerName]["revisionDate"]);
             }
 
         }
@@ -65,37 +67,39 @@ namespace LeagueStats
             {
                 //creates web client
                 var Client = new WebClient();
-                    //makes the url and downloads the json string
-                    string url = ("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/" + currentUser.id + "?api_key=" + _apikey);
-                    var rankedData = Client.DownloadString(url);
-                    //creates an object to hold the json string and parses it
-                    //If you ever need to fix this just rewrite it (logic too complicated to comment)
-                    JObject tempjsonLeagueData = JObject.Parse(rankedData);
-                    JArray jsonLeagueData = JArray.Parse(tempjsonLeagueData[currentUser.id].ToString());
-                    JArray jsonRankData = JArray.Parse(jsonLeagueData[0]["entries"].ToString());
+                //makes the url and downloads the json string
+                string url = ("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/" + currentUser.id + "?api_key=" + _apikey);
+                var rankedData = Client.DownloadString(url);
+                //creates an object to hold the json string and parses it
+                //If you ever need to fix this just rewrite it (logic too complicated to comment)
+                JObject tempjsonLeagueData = JObject.Parse(rankedData);
+                JArray jsonLeagueData = JArray.Parse(tempjsonLeagueData[currentUser.id].ToString());
+                JArray jsonRankData = JArray.Parse(jsonLeagueData[0]["entries"].ToString());
 
-                    //Get array line for data
-                    int arrayLength = jsonRankData.Count();
-                    int correctArrayLine = 0;
+                //Get array line for data
+                int arrayLength = jsonRankData.Count();
+                int correctArrayLine = 0;
 
-                    for (int line = 0; line < arrayLength; line++)
+                for (int line = 0; line < arrayLength; line++)
+                {
+                    if ((string)jsonRankData[line]["playerOrTeamId"] == currentUser.id)
                     {
-                        if ((string)jsonRankData[line]["playerOrTeamId"] == currentUser.id){
-                            correctArrayLine = line;
-                            break;
-                        }
+                        correctArrayLine = line;
+                        break;
                     }
+                }
 
-                    
 
-                    rankUser.league = (string)jsonLeagueData[0]["name"];
-                    rankUser.tier = (string)jsonLeagueData[0]["tier"];
-                    rankUser.division = (string)jsonRankData[correctArrayLine]["division"];
-                    rankUser.wins = (string)jsonRankData[correctArrayLine]["wins"];
-                    rankUser.losses = (string)jsonRankData[correctArrayLine]["losses"];
-                    rankUser.leaguePoints = (string)jsonRankData[correctArrayLine]["leaguePoints"];
 
-                    Client.Dispose();
+                rankUser.league = (string)jsonLeagueData[0]["name"];
+                rankUser.tier = (string)jsonLeagueData[0]["tier"];
+                rankUser.division = (string)jsonRankData[correctArrayLine]["division"];
+                rankUser.wins = (string)jsonRankData[correctArrayLine]["wins"];
+                rankUser.losses = (string)jsonRankData[correctArrayLine]["losses"];
+                rankUser.leaguePoints = (string)jsonRankData[correctArrayLine]["leaguePoints"];
+
+                //Closes Client session
+                Client.Dispose();
             }
             catch
             {
@@ -103,40 +107,62 @@ namespace LeagueStats
             }
 
         }
-        public static void Display(PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
+        public static void Display_Overview(PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
         {
+    //STARTUP
+            //Resets the displayed items
+            iconBox.Visible = false;
+            nameLabel.Visible = false;
+            levelLabel.Visible = false;
+            winlossLabel.Visible = false;
+            rankLabel.Visible = false;
+            lpLabel.Visible = false;
+
+    //BASIC INFO
+
             //Changes name label & makes it visible
             nameLabel.Visible = true;
             nameLabel.Text = currentUser.name;
 
             //changes iconBox image location
-            iconBox.ImageLocation = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/profileicon/" + currentUser.profileIconId + ".png";
+            iconBox.Visible = true;
+            iconBox.ImageLocation = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/profileicon/" + currentUser.profileIconId + ".png";
 
             //Change levelLabel
             levelLabel.Visible = true;
             levelLabel.Text = String.Format("Level {0}", currentUser.summonerLevel);
 
-            //Change winlossLabel
-            winlossLabel.Visible = true;
-            double wins = Convert.ToInt32(rankUser.wins);
-            double losses = Convert.ToInt32(rankUser.losses);
-            double winrate = (wins / (wins + losses) * 100);
-            string winrate_string = String.Format("{0:0.00}", winrate);
-            winlossLabel.Text = String.Format(
-                "Wins: {0}\r\n" +
-                "Losses: {1}\r\n" +
-                "Winrate: {2}%",
-                wins, losses, winrate_string);
+    //RANKED
+            if (Convert.ToInt32(currentUser.summonerLevel) == 30)
+            {
+                //Change winlossLabel
+                winlossLabel.Visible = true;
+                double wins = Convert.ToInt32(rankUser.wins);
+                double losses = Convert.ToInt32(rankUser.losses);
+                double winrate = (wins / (wins + losses) * 100);
+                string winrate_string = String.Format("{0:0.00}", winrate);
+                winlossLabel.Text = String.Format(
+                    "Wins: {0}\r\n" +
+                    "Losses: {1}\r\n" +
+                    "Winrate: {2}%",
+                    wins, losses, winrate_string);
 
-            //change rankLabel
-            rankLabel.Visible = true;
-            string rank = string.Format("{0} {1}", rankUser.tier, rankUser.division);
-            rankLabel.Text = rank;
+                //change rankLabel
+                rankLabel.Visible = true;
+                string rank = string.Format("{0} {1}", rankUser.tier, rankUser.division);
+                rankLabel.Text = rank;
 
-            //change lpLabel
-            lpLabel.Visible = true;
-            string lp = string.Format("{0} LP", rankUser.leaguePoints);
-            lpLabel.Text = lp;
+                //change lpLabel
+                lpLabel.Visible = true;
+                string lp = string.Format("{0} LP", rankUser.leaguePoints);
+                lpLabel.Text = lp;
+            }
+            else
+            {
+                //set rankLabel to say "UNRANKED"
+                rankLabel.Visible = true;
+                rankLabel.Text = "Unranked";
+            }
         }
         #endregion
 
@@ -144,20 +170,24 @@ namespace LeagueStats
         private void searchButton_Click(object sender, EventArgs e)
         {
             //Gets summoner name
-            SummonerName = searchBox.Text.ToLower();
+            _SummonerName = searchBox.Text.ToLower();
             try
             {
                 //Runs the CallAPI_basic method
                 CallAPI_basic();
-                //Runs the CallAPI_ranked method if currentUser level = 30
+                //Runs the CallAPI_ranked method if currentUser level == 30
                 if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); }
+
                 //Displays the data using the Display method
-                Display(iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+                Display_Overview(iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
             }
             catch
             {
                 MessageBox.Show("There was an error. Perhaps try another username");
             }
+
+
+
 
         }
         //Accepts enter key for searching
@@ -194,6 +224,8 @@ namespace LeagueStats
 
         static string _apikey = "c19aabb4-0d8e-44c1-ae83-4b03249382e9";
     }
+
+    //Bases for Users
     public class User_basic
     {
         public string id;
