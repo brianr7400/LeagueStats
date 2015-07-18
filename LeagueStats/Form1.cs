@@ -11,7 +11,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-
+using System.Threading;
 namespace LeagueStats
 {
     public partial class LeagueStats : Form
@@ -32,10 +32,14 @@ namespace LeagueStats
 
         static string _datadragonVersion = "5.13.1";
         static string _SummonerName;
-
-        //creates instances of the user classes
-
         
+        //Creates the threads for collecting data
+        Thread _OverviewTab = new Thread(new ThreadStart(CallAPI_ranked));
+        Thread _MatchHistoryTab = new Thread(new ThreadStart(CallAPI_rankhistory));
+
+    //creates instances of the user classes
+        //List to hold  match history
+        static List<User_rankhistory> RankMatchHistory = new List<User_rankhistory>();
         static User_basic currentUser = new User_basic();
         static User_ranked rankUser = new User_ranked();
 
@@ -52,6 +56,7 @@ namespace LeagueStats
             //Creates WebClient
             using (var Client = new WebClient())
             {
+                Client.Proxy = null;
                 //Gets Summoner information | name, id, profileIconId, summonerLevel, revisionDate
                 string url = ("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + _SummonerName.Replace(" ", "%20") + "?api_key=" + _apikey);
                 var SummonerData = Client.DownloadString(url);
@@ -78,6 +83,7 @@ namespace LeagueStats
             {
                 //creates web client
                 var Client = new WebClient();
+                Client.Proxy = null;
                 //makes the url and downloads the json string
                 string url = ("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/" + currentUser.id + "?api_key=" + _apikey);
                 var rankedData = Client.DownloadString(url);
@@ -100,8 +106,6 @@ namespace LeagueStats
                     }
                 }
 
-
-
                 rankUser.league = (string)jsonLeagueData[0]["name"];
                 rankUser.tier = (string)jsonLeagueData[0]["tier"];
                 rankUser.division = (string)jsonRankData[correctArrayLine]["division"];
@@ -122,8 +126,7 @@ namespace LeagueStats
         //Gets Ranked Match History
         public static void CallAPI_rankhistory()
         {
-            //Creates list to hold match history
-            List<User_rankhistory> RankMatchHistory = new List<User_rankhistory>();
+            
             //creates client to get json info
             var Client = new WebClient();
             //creates url to get json info from
@@ -136,43 +139,28 @@ namespace LeagueStats
             //Puts all the data into the User_rankhistory list backwards so that 0 is the most recent match
             for (int i = jsonRankHistory.Count() - 1; i >= 0; i--)
             {
-                RankMatchHistory.Add(new User_rankhistory(
-                   //winner
-                   jsonRankHistory[i]["participants"][0]["stats"]["winner"].ToString(),
-                   
-                   //role
-                   jsonRankHistory[i]["participants"][0]["timeline"]["role"].ToString(),
+                //Preps data that needs prepping
+                string champ_id = jsonRankHistory[i]["participants"][0]["championId"].ToString();
+                string champ_url = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + champ_id + "?api_key=" + _apikey);
+                var champ_info = Client.DownloadString(champ_url);
+                JObject ChampData = JObject.Parse(champ_info);
+                string champ_name = ChampData["name"].ToString();
 
-                   //lane
-                   jsonRankHistory[i]["participants"][0]["timeline"]["lane"].ToString(),
-
-                   //level
-                   jsonRankHistory[i]["participants"][0]["stats"]["champLevel"].ToString(),
-
-                   //kills
-                   jsonRankHistory[i]["participants"][0]["stats"]["kills"].ToString(),
-
-                   //deaths
-                   jsonRankHistory[i]["participants"][0]["stats"]["deaths"].ToString(),
-
-                   //assists
-                   jsonRankHistory[i]["participants"][0]["stats"]["assists"].ToString(),
-
-                   //gold
-                   jsonRankHistory[i]["participants"][0]["stats"]["goldEarned"].ToString(),
-
-                   //CS
-                   jsonRankHistory[i]["participants"][0]["stats"]["minionsKilled"].ToString(),
-
-                   //wards
-                   jsonRankHistory[i]["participants"][0]["stats"]["sightWardsBoughtInGame"].ToString(),
-
-                   //visionwards
-                   jsonRankHistory[i]["participants"][0]["stats"]["visionWardsBoughtInGame"].ToString(),
-
-                   //towers
-                   jsonRankHistory[i]["participants"][0]["stats"]["towerKills"].ToString()
-                   ));
+                string winner = jsonRankHistory[i]["participants"][0]["stats"]["winner"].ToString();
+                string role= jsonRankHistory[i]["participants"][0]["timeline"]["role"].ToString();
+                string lane = jsonRankHistory[i]["participants"][0]["timeline"]["lane"].ToString();
+                string level = jsonRankHistory[i]["participants"][0]["stats"]["champLevel"].ToString();
+                string kills = jsonRankHistory[i]["participants"][0]["stats"]["kills"].ToString();
+                string deaths = jsonRankHistory[i]["participants"][0]["stats"]["deaths"].ToString();
+                string assists = jsonRankHistory[i]["participants"][0]["stats"]["assists"].ToString();
+                string gold = jsonRankHistory[i]["participants"][0]["stats"]["goldEarned"].ToString();
+                string cs = jsonRankHistory[i]["participants"][0]["stats"]["minionsKilled"].ToString();
+                string wards = jsonRankHistory[i]["participants"][0]["stats"]["sightWardsBoughtInGame"].ToString();
+                string visionwards = jsonRankHistory[i]["participants"][0]["stats"]["visionWardsBoughtInGame"].ToString();
+                string towers = jsonRankHistory[i]["participants"][0]["stats"]["towerKills"].ToString();
+              
+                //Adds the data to the list
+                RankMatchHistory.Add(new User_rankhistory(winner,role,lane,level,kills,deaths,assists,gold,cs,wards,visionwards,towers,champ_id,champ_name));
             }
             Client.Dispose();
 
@@ -192,7 +180,7 @@ namespace LeagueStats
                 //Runs the CallAPI_basic method
                 CallAPI_basic();
                 //Runs the CallAPI_ranked method if currentUser level == 30
-                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); CallAPI_rankhistory();}
+                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); CallAPI_rankhistory(); }
 
                 //Displays the data using the Display method
                 Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
@@ -267,14 +255,83 @@ namespace LeagueStats
                 rankLabel.Text = "Unranked";
             }
         }
+
+        public static void Display_MatchHistory(PictureBox champPic, Label winLabel, Label jobLabel, Label kdaLabel, Label levelLabel, Label goldLabel, Label csLabel, Label towerLabel, Label wardLabel, Label visionwardLabel)
+        {
+    //ChampPic
+            string image_url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/champion/" + RankMatchHistory[0].champ + ".png");
+            champPic.ImageLocation = image_url;
+    //WinLabel
+            if (RankMatchHistory[0].winner == "true") { winLabel.Text = "Win"; } 
+            else { winLabel.Text = "Loss"; }
+    //Joblabel
+            #region JobLabel
+            //BOTTOM
+            if (RankMatchHistory[0].lane == "BOTTOM")
+            {
+                switch (RankMatchHistory[0].role)
+                {
+                    case ("DUO_CARRY"):
+                        jobLabel.Text = "ADC";
+                        break;
+                    case ("DUO_SUPPORT"):
+                        jobLabel.Text = "Support";
+                        break;
+                }
+            }
+        //MID
+            if (RankMatchHistory[0].lane == "MIDDLE")
+            {
+                jobLabel.Text = "Mid";
+            }
+        //TOP
+            if (RankMatchHistory[0].lane == "TOP")
+            {
+                jobLabel.Text = "Top";
+            }
+        //JUNGLE
+            if (RankMatchHistory[0].lane == "NONE")
+            {
+                jobLabel.Text = "Jungle";
+            }
+            #endregion
+    //KDALabel
+            string kills = RankMatchHistory[0].kills;
+            string deaths = RankMatchHistory[0].deaths;
+            string assists = RankMatchHistory[0].assists;
+            string kda = String.Format("{0}/{1}/{2}",kills,deaths,assists);
+            kdaLabel.Text = kda;
+    //LevelLabel
+            string level = RankMatchHistory[0].level;
+            levelLabel.Text = String.Format("Level: {0}", level);
+    //goldLabel
+            string gold = RankMatchHistory[0].gold;
+            goldLabel.Text = String.Format("Gold Earned: {0}", gold);
+    //csLabel
+            string cs = RankMatchHistory[0].cs;
+            csLabel.Text = String.Format("Minions Killed: {0}", cs);
+    //towerLabel
+            string towers = RankMatchHistory[0].towers;
+            towerLabel.Text = String.Format("Towers Destroyed: {0}",towers);
+    //wardLabel
+            string wards = RankMatchHistory[0].towers;
+            wardLabel.Text = String.Format("Wards Placed: {0}", wards);
+    //visionwardLabel
+            string visionwards = RankMatchHistory[0].visionwards;
+            visionwardLabel.Text = String.Format("Pink Wards Placed: {0}", visionwards);
+
+        }
+
         #endregion
 
         #endregion
 
         #region Form Controlls
+        #region Searching
         private void searchButton_Click(object sender, EventArgs e)
         {
             Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+            tabControl.SelectTab("overviewTab");
         }
 
         //Accepts enter key for searching
@@ -290,6 +347,17 @@ namespace LeagueStats
             //Clears searchBox when clicked
             searchBox.Clear();
         }
+        #endregion
+
+        #region Tabs
+        private void tabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            //When Clicked gets match history data
+            //CallAPI_rankhistory();
+            Display_MatchHistory(champPic1, winLabel1, jobLabel1, kdaLabel1, levelLabel1, goldLabel1, csLabel1, towerLabel1, wardLabel1, visionwardLabel1);
+        }
+
+        #endregion
 
         #region MenuStrip
         private void meToolStripMenuItem_Click(object sender, EventArgs e)
@@ -344,23 +412,29 @@ namespace LeagueStats
         public string wards;
         public string visionwards;
         public string towers;
-
+        public string champId;
+        public string champ;
+        
         //Constructors
-        public User_rankhistory(string winner, string role, string lane, string level, string kills, string deaths, string assists, string gold, string cs, string wards, string visionwards, string towers)
+        public User_rankhistory(string winner, string role, string lane, string level, string kills, string deaths, string assists, string gold, string cs, string wards, string visionwards, string towers, string champId, string champ)
         {
-            this.winner = "";
-            this.role = "";
-            this.lane = "";
-            this.level = "";
-            this.kills = "";
-            this.deaths = "";
-            this.assists = "";
-            this.gold = "";
-            this.cs = "";
-            this.wards = "";
-            this.visionwards = "";
-            this.towers = "";
+            this.winner = winner;
+            this.role = role;
+            this.lane = lane;
+            this.level = level;
+            this.kills = kills;
+            this.deaths = deaths;
+            this.assists = assists;
+            this.gold = gold;
+            this.cs = cs;
+            this.wards = wards;
+            this.visionwards = visionwards;
+            this.towers = towers;
+            this.champId = champId;
+            this.champ = champ;
         }
+
+        //public string Winner { get { return winner; } set { winner = value; } }
         
     }
 #endregion

@@ -49,11 +49,25 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.overviewTab = new System.Windows.Forms.TabPage();
             this.matchhistoryTab = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.towerLabel1 = new System.Windows.Forms.Label();
+            this.visionwardLabel1 = new System.Windows.Forms.Label();
+            this.wardLabel1 = new System.Windows.Forms.Label();
+            this.csLabel1 = new System.Windows.Forms.Label();
+            this.goldLabel1 = new System.Windows.Forms.Label();
+            this.levelLabel1 = new System.Windows.Forms.Label();
+            this.kdaLabel1 = new System.Windows.Forms.Label();
+            this.jobLabel1 = new System.Windows.Forms.Label();
+            this.winLabel1 = new System.Windows.Forms.Label();
+            this.champPic1 = new System.Windows.Forms.PictureBox();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.overviewTab.SuspendLayout();
+            this.matchhistoryTab.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.champPic1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -108,6 +122,7 @@
             // searchButton
             // 
             this.searchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.searchButton.FlatAppearance.BorderSize = 3;
             this.searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -252,6 +267,7 @@
             this.tabControl.Size = new System.Drawing.Size(944, 392);
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl.TabIndex = 14;
+            this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
             // overviewTab
             // 
@@ -273,12 +289,139 @@
             // matchhistoryTab
             // 
             this.matchhistoryTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.matchhistoryTab.Controls.Add(this.groupBox1);
             this.matchhistoryTab.Location = new System.Drawing.Point(4, 22);
             this.matchhistoryTab.Name = "matchhistoryTab";
             this.matchhistoryTab.Padding = new System.Windows.Forms.Padding(3);
             this.matchhistoryTab.Size = new System.Drawing.Size(936, 366);
             this.matchhistoryTab.TabIndex = 1;
             this.matchhistoryTab.Text = "Match History";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.towerLabel1);
+            this.groupBox1.Controls.Add(this.visionwardLabel1);
+            this.groupBox1.Controls.Add(this.wardLabel1);
+            this.groupBox1.Controls.Add(this.csLabel1);
+            this.groupBox1.Controls.Add(this.goldLabel1);
+            this.groupBox1.Controls.Add(this.levelLabel1);
+            this.groupBox1.Controls.Add(this.kdaLabel1);
+            this.groupBox1.Controls.Add(this.jobLabel1);
+            this.groupBox1.Controls.Add(this.winLabel1);
+            this.groupBox1.Controls.Add(this.champPic1);
+            this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(920, 112);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            // 
+            // towerLabel1
+            // 
+            this.towerLabel1.AutoSize = true;
+            this.towerLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.towerLabel1.ForeColor = System.Drawing.Color.White;
+            this.towerLabel1.Location = new System.Drawing.Point(589, 16);
+            this.towerLabel1.Name = "towerLabel1";
+            this.towerLabel1.Size = new System.Drawing.Size(236, 29);
+            this.towerLabel1.TabIndex = 9;
+            this.towerLabel1.Text = "Towers Destroyed: 2";
+            // 
+            // visionwardLabel1
+            // 
+            this.visionwardLabel1.AutoSize = true;
+            this.visionwardLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.visionwardLabel1.ForeColor = System.Drawing.Color.White;
+            this.visionwardLabel1.Location = new System.Drawing.Point(589, 71);
+            this.visionwardLabel1.Name = "visionwardLabel1";
+            this.visionwardLabel1.Size = new System.Drawing.Size(241, 29);
+            this.visionwardLabel1.TabIndex = 8;
+            this.visionwardLabel1.Text = "Pink Wards Placed: 1";
+            // 
+            // wardLabel1
+            // 
+            this.wardLabel1.AutoSize = true;
+            this.wardLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wardLabel1.ForeColor = System.Drawing.Color.White;
+            this.wardLabel1.Location = new System.Drawing.Point(589, 45);
+            this.wardLabel1.Name = "wardLabel1";
+            this.wardLabel1.Size = new System.Drawing.Size(188, 29);
+            this.wardLabel1.TabIndex = 7;
+            this.wardLabel1.Text = "Wards Placed: 9";
+            // 
+            // csLabel1
+            // 
+            this.csLabel1.AutoSize = true;
+            this.csLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.csLabel1.ForeColor = System.Drawing.Color.White;
+            this.csLabel1.Location = new System.Drawing.Point(344, 74);
+            this.csLabel1.Name = "csLabel1";
+            this.csLabel1.Size = new System.Drawing.Size(216, 29);
+            this.csLabel1.TabIndex = 6;
+            this.csLabel1.Text = "Minions Killed: 233";
+            // 
+            // goldLabel1
+            // 
+            this.goldLabel1.AutoSize = true;
+            this.goldLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.goldLabel1.ForeColor = System.Drawing.Color.White;
+            this.goldLabel1.Location = new System.Drawing.Point(344, 45);
+            this.goldLabel1.Name = "goldLabel1";
+            this.goldLabel1.Size = new System.Drawing.Size(226, 29);
+            this.goldLabel1.TabIndex = 5;
+            this.goldLabel1.Text = "Gold Earned: 13955";
+            // 
+            // levelLabel1
+            // 
+            this.levelLabel1.AutoSize = true;
+            this.levelLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.levelLabel1.ForeColor = System.Drawing.Color.White;
+            this.levelLabel1.Location = new System.Drawing.Point(344, 16);
+            this.levelLabel1.Name = "levelLabel1";
+            this.levelLabel1.Size = new System.Drawing.Size(109, 29);
+            this.levelLabel1.TabIndex = 4;
+            this.levelLabel1.Text = "Level: 17";
+            // 
+            // kdaLabel1
+            // 
+            this.kdaLabel1.AutoSize = true;
+            this.kdaLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kdaLabel1.ForeColor = System.Drawing.Color.White;
+            this.kdaLabel1.Location = new System.Drawing.Point(204, 71);
+            this.kdaLabel1.Name = "kdaLabel1";
+            this.kdaLabel1.Size = new System.Drawing.Size(79, 29);
+            this.kdaLabel1.TabIndex = 3;
+            this.kdaLabel1.Text = "12/6/8";
+            // 
+            // jobLabel1
+            // 
+            this.jobLabel1.AutoSize = true;
+            this.jobLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jobLabel1.ForeColor = System.Drawing.Color.White;
+            this.jobLabel1.Location = new System.Drawing.Point(113, 71);
+            this.jobLabel1.Name = "jobLabel1";
+            this.jobLabel1.Size = new System.Drawing.Size(85, 29);
+            this.jobLabel1.TabIndex = 2;
+            this.jobLabel1.Text = "Jungle";
+            // 
+            // winLabel1
+            // 
+            this.winLabel1.AutoSize = true;
+            this.winLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.winLabel1.ForeColor = System.Drawing.Color.White;
+            this.winLabel1.Location = new System.Drawing.Point(108, 16);
+            this.winLabel1.Name = "winLabel1";
+            this.winLabel1.Size = new System.Drawing.Size(182, 55);
+            this.winLabel1.TabIndex = 1;
+            this.winLabel1.Text = "Winner";
+            // 
+            // champPic1
+            // 
+            this.champPic1.Location = new System.Drawing.Point(7, 11);
+            this.champPic1.Name = "champPic1";
+            this.champPic1.Size = new System.Drawing.Size(95, 95);
+            this.champPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.champPic1.TabIndex = 0;
+            this.champPic1.TabStop = false;
             // 
             // LeagueStats
             // 
@@ -306,6 +449,10 @@
             this.tabControl.ResumeLayout(false);
             this.overviewTab.ResumeLayout(false);
             this.overviewTab.PerformLayout();
+            this.matchhistoryTab.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.champPic1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,6 +480,17 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage overviewTab;
         private System.Windows.Forms.TabPage matchhistoryTab;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox champPic1;
+        private System.Windows.Forms.Label winLabel1;
+        private System.Windows.Forms.Label jobLabel1;
+        private System.Windows.Forms.Label towerLabel1;
+        private System.Windows.Forms.Label wardLabel1;
+        private System.Windows.Forms.Label visionwardLabel1;
+        private System.Windows.Forms.Label csLabel1;
+        private System.Windows.Forms.Label goldLabel1;
+        private System.Windows.Forms.Label levelLabel1;
+        private System.Windows.Forms.Label kdaLabel1;
     }
 }
 
