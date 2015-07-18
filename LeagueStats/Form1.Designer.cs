@@ -258,7 +258,7 @@
             this.rankLabel.AutoSize = true;
             this.rankLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rankLabel.ForeColor = System.Drawing.Color.White;
-            this.rankLabel.Location = new System.Drawing.Point(458, 108);
+            this.rankLabel.Location = new System.Drawing.Point(420, 108);
             this.rankLabel.Name = "rankLabel";
             this.rankLabel.Size = new System.Drawing.Size(234, 42);
             this.rankLabel.TabIndex = 12;
@@ -271,7 +271,7 @@
             this.lpLabel.AutoSize = true;
             this.lpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lpLabel.ForeColor = System.Drawing.Color.White;
-            this.lpLabel.Location = new System.Drawing.Point(460, 147);
+            this.lpLabel.Location = new System.Drawing.Point(422, 147);
             this.lpLabel.Name = "lpLabel";
             this.lpLabel.Size = new System.Drawing.Size(74, 29);
             this.lpLabel.TabIndex = 13;

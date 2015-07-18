@@ -31,8 +31,10 @@ namespace LeagueStats
 
         static string _datadragonVersion = "5.13.1";
         static string _SummonerName;
+
         //creates instances of the user classes
 
+        
         static User_basic currentUser = new User_basic();
         static User_ranked rankUser = new User_ranked();
 
@@ -116,6 +118,67 @@ namespace LeagueStats
 
         }
 
+        //Gets Ranked Match History
+        public static void CallAPI_rankhistory()
+        {
+            //Creates list to hold match history
+            List<User_rankhistory> RankMatchHistory = new List<User_rankhistory>();
+            //creates client to get json info
+            var Client = new WebClient();
+            //creates url to get json info from
+            string url = String.Format("https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + currentUser.id + "?rankedQueues=RANKED_SOLO_5x5&api_key=" + _apikey);
+            //downloads data
+            var rankhistory = Client.DownloadString(url);
+            JObject tempjsonRankHistory = JObject.Parse(rankhistory);
+            JArray jsonRankHistory = JArray.Parse(tempjsonRankHistory["matches"].ToString());
+            
+            //Puts all the data into the User_rankhistory list backwards so that 0 is the most recent match
+            for (int i = jsonRankHistory.Count() - 1; i >= 0; i--)
+            {
+                RankMatchHistory.Add(new User_rankhistory(
+                   //winner
+                   jsonRankHistory[i]["participants"][15]["stats"]["winner"].ToString(),
+                   
+                   //role
+                   jsonRankHistory[i]["participants"][12]["role"].ToString(),
+
+                   //lane
+                   jsonRankHistory[i]["participants"][13]["lane"].ToString(),
+
+                   //level
+                   jsonRankHistory[i]["participants"][15]["stats"]["champLevel"].ToString(),
+
+                   //kills
+                   jsonRankHistory[i]["participants"][15]["stats"]["kills"].ToString(),
+
+                   //deaths
+                   jsonRankHistory[i]["participants"][15]["stats"]["deaths"].ToString(),
+
+                   //assists
+                   jsonRankHistory[i]["participants"][15]["stats"]["assists"].ToString(),
+
+                   //gold
+                   jsonRankHistory[i]["participants"][15]["stats"]["goldEarned"].ToString(),
+
+                   //CS
+                   jsonRankHistory[i]["participants"][15]["stats"]["minionsKilled"].ToString(),
+
+                   //wards
+                   jsonRankHistory[i]["participants"][15]["stats"]["sightWardsBoughtInGame"].ToString(),
+
+                   //visionwards
+                   jsonRankHistory[i]["participants"][15]["stats"]["visionWardsBoughtInGame"].ToString(),
+
+                   //towers
+                   jsonRankHistory[i]["participants"][15]["stats"]["towerKills"].ToString()
+                   ));
+            }
+            string message = String.Format("You got {0} kills, and got {1} assists", RankMatchHistory[0].kills, RankMatchHistory[3].assists);
+            MessageBox.Show(message);
+            Client.Dispose();
+
+        }
+
         #endregion
 
         //Called when the search button is pressed
@@ -129,23 +192,24 @@ namespace LeagueStats
                 //Runs the CallAPI_basic method
                 CallAPI_basic();
                 //Runs the CallAPI_ranked method if currentUser level == 30
-                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); }
+                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked();}
 
                 //Displays the data using the Display method
-                Display_Overview(iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+                Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
 
             }
             catch
             {
                 MessageBox.Show("There was an error. Perhaps try another username");
             }
+            //CallAPI_rankhistory(); 
         }
         #endregion
 
         //Displays Data
         #region Display
         
-        public static void Display_Overview(PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
+        public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
         {
 
     //STARTUP
@@ -175,7 +239,7 @@ namespace LeagueStats
             if (Convert.ToInt32(currentUser.summonerLevel) == 30)
             {
                 //Change winlossLabel
-                winlossLabel.Visible = true;
+                winlossLabel.Visible = visible;
                 double wins = Convert.ToInt32(rankUser.wins);
                 double losses = Convert.ToInt32(rankUser.losses);
                 double winrate = (wins / (wins + losses) * 100);
@@ -187,19 +251,19 @@ namespace LeagueStats
                     wins, losses, winrate_string);
 
                 //change rankLabel
-                rankLabel.Visible = true;
+                rankLabel.Visible = visible;
                 string rank = string.Format("{0} {1}", rankUser.tier, rankUser.division);
                 rankLabel.Text = rank;
 
                 //change lpLabel
-                lpLabel.Visible = true;
+                lpLabel.Visible = visible;
                 string lp = string.Format("{0} LP", rankUser.leaguePoints);
                 lpLabel.Text = lp;
             }
             else
             {
                 //set rankLabel to say "UNRANKED"
-                rankLabel.Visible = true;
+                rankLabel.Visible = visible;
                 rankLabel.Text = "Unranked";
             }
         }
@@ -266,6 +330,38 @@ namespace LeagueStats
         public string league;
         public string leaguePoints;
     }
+    public class User_rankhistory
+    {
+        public string winner;        
+        public string role;
+        public string lane;
+        public string level;
+        public string kills;
+        public string deaths;
+        public string assists;
+        public string gold;
+        public string cs;
+        public string wards;
+        public string visionwards;
+        public string towers;
 
+        //Constructors
+        public User_rankhistory(string winner, string role, string lane, string level, string kills, string deaths, string assists, string gold, string cs, string wards, string visionwards, string towers)
+        {
+            this.winner = "";
+            this.role = "";
+            this.lane = "";
+            this.level = "";
+            this.kills = "";
+            this.deaths = "";
+            this.assists = "";
+            this.gold = "";
+            this.cs = "";
+            this.wards = "";
+            this.visionwards = "";
+            this.towers = "";
+        }
+        
+    }
 #endregion
 }
