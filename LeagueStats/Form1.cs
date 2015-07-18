@@ -20,11 +20,12 @@ namespace LeagueStats
         public LeagueStats()
         {
             InitializeComponent();
-
+            Color themeColor = new Color();
+            themeColor = Color.FromArgb(13, 98, 162);
             //Colors everything
-            this.BackColor = Color.FromArgb(13, 98, 162);
-            searchBox.BackColor = Color.FromArgb(13, 98, 162);
-            regionBox.BackColor = Color.FromArgb(13, 98, 162);
+            this.BackColor = themeColor;
+            searchBox.BackColor = themeColor;
+            regionBox.BackColor = themeColor;
         }
 
         #region Global Variables
@@ -137,47 +138,46 @@ namespace LeagueStats
             {
                 RankMatchHistory.Add(new User_rankhistory(
                    //winner
-                   jsonRankHistory[i]["participants"][15]["stats"]["winner"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["winner"].ToString(),
                    
                    //role
-                   jsonRankHistory[i]["participants"][12]["role"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["timeline"]["role"].ToString(),
 
                    //lane
-                   jsonRankHistory[i]["participants"][13]["lane"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["timeline"]["lane"].ToString(),
 
                    //level
-                   jsonRankHistory[i]["participants"][15]["stats"]["champLevel"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["champLevel"].ToString(),
 
                    //kills
-                   jsonRankHistory[i]["participants"][15]["stats"]["kills"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["kills"].ToString(),
 
                    //deaths
-                   jsonRankHistory[i]["participants"][15]["stats"]["deaths"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["deaths"].ToString(),
 
                    //assists
-                   jsonRankHistory[i]["participants"][15]["stats"]["assists"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["assists"].ToString(),
 
                    //gold
-                   jsonRankHistory[i]["participants"][15]["stats"]["goldEarned"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["goldEarned"].ToString(),
 
                    //CS
-                   jsonRankHistory[i]["participants"][15]["stats"]["minionsKilled"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["minionsKilled"].ToString(),
 
                    //wards
-                   jsonRankHistory[i]["participants"][15]["stats"]["sightWardsBoughtInGame"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["sightWardsBoughtInGame"].ToString(),
 
                    //visionwards
-                   jsonRankHistory[i]["participants"][15]["stats"]["visionWardsBoughtInGame"].ToString(),
+                   jsonRankHistory[i]["participants"][0]["stats"]["visionWardsBoughtInGame"].ToString(),
 
                    //towers
-                   jsonRankHistory[i]["participants"][15]["stats"]["towerKills"].ToString()
+                   jsonRankHistory[i]["participants"][0]["stats"]["towerKills"].ToString()
                    ));
             }
-            string message = String.Format("You got {0} kills, and got {1} assists", RankMatchHistory[0].kills, RankMatchHistory[3].assists);
-            MessageBox.Show(message);
             Client.Dispose();
 
         }
+        
 
         #endregion
 
@@ -192,7 +192,7 @@ namespace LeagueStats
                 //Runs the CallAPI_basic method
                 CallAPI_basic();
                 //Runs the CallAPI_ranked method if currentUser level == 30
-                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked();}
+                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); CallAPI_rankhistory();}
 
                 //Displays the data using the Display method
                 Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
@@ -202,7 +202,7 @@ namespace LeagueStats
             {
                 MessageBox.Show("There was an error. Perhaps try another username");
             }
-            //CallAPI_rankhistory(); 
+            
         }
         #endregion
 
