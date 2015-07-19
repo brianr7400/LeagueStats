@@ -136,15 +136,36 @@ namespace LeagueStats
             JObject tempjsonRankHistory = JObject.Parse(rankhistory);
             JArray jsonRankHistory = JArray.Parse(tempjsonRankHistory["matches"].ToString());
             
+            //Get list of champions
+            string champ_url = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=" + _apikey);
+            var champ_list = Client.DownloadString(champ_url);
+            JObject jsonChamp_list = JObject.Parse(champ_list);
+            List<string> ChampNames = new List<string>();
+            foreach (JProperty name in jsonChamp_list["data"])
+            {
+                ChampNames.Add(name.ToString());
+            }
+
             //Puts all the data into the User_rankhistory list backwards so that 0 is the most recent match
             for (int i = jsonRankHistory.Count() - 1; i >= 0; i--)
             {
                 //Preps data that needs prepping
                 string champ_id = jsonRankHistory[i]["participants"][0]["championId"].ToString();
-                string champ_url = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + champ_id + "?api_key=" + _apikey);
-                var champ_info = Client.DownloadString(champ_url);
-                JObject ChampData = JObject.Parse(champ_info);
-                string champ_name = ChampData["name"].ToString();
+                //string champ_url = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + champ_id + "?api_key=" + _apikey);
+                //var champ_info = Client.DownloadString(champ_url);
+                //JObject ChampData = JObject.Parse(champ_info);
+                //string champ_name = ChampData["name"].ToString();
+                string champ_name = "";
+                foreach (string name in ChampNames)
+                {
+                    string id;
+                    if (jsonChamp_list["data"][name]["id"].ToString() == champ_id)
+                    {
+                        champ_name = name;
+                        break;
+                    }
+                }
+                
 
                 string winner = jsonRankHistory[i]["participants"][0]["stats"]["winner"].ToString();
                 string role= jsonRankHistory[i]["participants"][0]["timeline"]["role"].ToString();
@@ -154,7 +175,10 @@ namespace LeagueStats
                 string deaths = jsonRankHistory[i]["participants"][0]["stats"]["deaths"].ToString();
                 string assists = jsonRankHistory[i]["participants"][0]["stats"]["assists"].ToString();
                 string gold = jsonRankHistory[i]["participants"][0]["stats"]["goldEarned"].ToString();
-                string cs = jsonRankHistory[i]["participants"][0]["stats"]["minionsKilled"].ToString();
+                //Adds both jung minions and lane minions
+                    int laneminions = (int)jsonRankHistory[i]["participants"][0]["stats"]["minionsKilled"];
+                    int jungminions = (int)jsonRankHistory[i]["participants"][0]["stats"]["neutralMinionsKilled"];
+                string cs = (laneminions + jungminions).ToString();
                 string wards = jsonRankHistory[i]["participants"][0]["stats"]["sightWardsBoughtInGame"].ToString();
                 string visionwards = jsonRankHistory[i]["participants"][0]["stats"]["visionWardsBoughtInGame"].ToString();
                 string towers = jsonRankHistory[i]["participants"][0]["stats"]["towerKills"].ToString();
