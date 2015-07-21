@@ -63,7 +63,10 @@ namespace LeagueStats
         static List<Label> _towerLabelList = new List<Label>();
         static List<Label> _wardLabelList = new List<Label>();
         static List<Label> _visionwardLabelList = new List<Label>();
+        static List<Label> _timeLabelList = new List<Label>();
 
+            //Bools for deciding when to do things
+        static bool _BasicInfoCalled = false;
         static bool _MatchHistoryCreated = false;
     //creates instances of the user classes
         //List to hold  match history
@@ -102,6 +105,7 @@ namespace LeagueStats
                 currentUser.profileIconId = (string)(jsonSummonerData[_SummonerName]["profileIconId"]);
                 currentUser.summonerLevel = (string)(jsonSummonerData[_SummonerName]["summonerLevel"]);
                 currentUser.revisionDate = (string)(jsonSummonerData[_SummonerName]["revisionDate"]);
+                _BasicInfoCalled = true;
             }
 
         }
@@ -177,15 +181,21 @@ namespace LeagueStats
                 ChampNames.Add(name.Name);
             }
 
+            //Get list of summonerSpells
+            string spell_url = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?api_key=" + _apikey);
+            var spell_list = Client.DownloadString(spell_url);
+            JObject jsonspell_list = JObject.Parse(spell_list);
+            List<string> SpellNames = new List<string>();
+            foreach (JProperty name in jsonspell_list["data"])
+            {
+                SpellNames.Add(name.Name);
+            }
+
             //Puts all the data into the User_rankhistory list backwards so that 0 is the most recent match
             for (int i = jsonRankHistory.Count() - 1; i >= 0; i--)
             {
                 //Preps data that needs prepping
                 string champ_id = jsonRankHistory[i]["participants"][0]["championId"].ToString();
-                //string champ_url = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + champ_id + "?api_key=" + _apikey);
-                //var champ_info = Client.DownloadString(champ_url);
-                //JObject ChampData = JObject.Parse(champ_info);
-                //string champ_name = ChampData["name"].ToString();
                 string champ_name = "";
                 foreach (string name in ChampNames)
                 {
@@ -196,8 +206,30 @@ namespace LeagueStats
                         break;
                     }
                 }
-                
 
+                string sum0 = jsonRankHistory[i]["participants"][0]["spell1Id"].ToString();
+                string sum1 = jsonRankHistory[i]["participants"][0]["spell2Id"].ToString();
+                string sum0_name = "";
+                string sum1_name = "";
+                foreach (string name in SpellNames)
+                {
+                    string id = jsonspell_list["data"][name]["id"].ToString();
+                    if (id == sum0)
+                    {
+                        sum0_name = name;
+                        break;
+                    }
+                }
+                foreach (string name in SpellNames)
+                {
+                    string id = jsonspell_list["data"][name]["id"].ToString();
+                    if (id == sum1)
+                    {
+                        sum1_name = name;
+                        break;
+                    }
+                }
+                
                 string winner = jsonRankHistory[i]["participants"][0]["stats"]["winner"].ToString();
                 string role= jsonRankHistory[i]["participants"][0]["timeline"]["role"].ToString();
                 string lane = jsonRankHistory[i]["participants"][0]["timeline"]["lane"].ToString();
@@ -213,9 +245,16 @@ namespace LeagueStats
                 string wards = jsonRankHistory[i]["participants"][0]["stats"]["sightWardsBoughtInGame"].ToString();
                 string visionwards = jsonRankHistory[i]["participants"][0]["stats"]["visionWardsBoughtInGame"].ToString();
                 string towers = jsonRankHistory[i]["participants"][0]["stats"]["towerKills"].ToString();
-              
+                string item0 = jsonRankHistory[i]["participants"][0]["stats"]["item0"].ToString();
+                string item1 = jsonRankHistory[i]["participants"][0]["stats"]["item1"].ToString();
+                string item2 = jsonRankHistory[i]["participants"][0]["stats"]["item2"].ToString();
+                string item3 = jsonRankHistory[i]["participants"][0]["stats"]["item3"].ToString();
+                string item4 = jsonRankHistory[i]["participants"][0]["stats"]["item4"].ToString();
+                string item5 = jsonRankHistory[i]["participants"][0]["stats"]["item5"].ToString();
+                string item6 = jsonRankHistory[i]["participants"][0]["stats"]["item6"].ToString();
+                string time = jsonRankHistory[i]["matchDuration"].ToString();
                 //Adds the data to the list
-                RankMatchHistory.Add(new User_rankhistory(winner,role,lane,level,kills,deaths,assists,gold,cs,wards,visionwards,towers,champ_id,champ_name));
+                RankMatchHistory.Add(new User_rankhistory(winner,role,lane,level,kills,deaths,assists,gold,cs,wards,visionwards,towers,champ_id,champ_name,item0,item1,item2,item3,item4,item5,item6,sum0,sum0_name,sum1,sum1_name, time));
             }
             Client.Dispose();
 
@@ -271,6 +310,8 @@ namespace LeagueStats
             picBox.Size = boxSize;
             picBox.SizeMode = PictureBoxSizeMode.StretchImage;
             picBox.ImageLocation = "http://images.kaneva.com/filestore10/5483612/7216070/blac.jpg";
+            picBox.BorderStyle = BorderStyle.FixedSingle;
+            picBox.ErrorImage = null;
             page.Controls.Add(picBox);
             return picBox;
         }
@@ -344,7 +385,8 @@ namespace LeagueStats
             //int pictureboxDrop = -210;
             int pictureboxDrop = -96;
             int labelDrop = -114;
-            int itemDrop = 0;
+            int itemDrop = -114;
+            int sumDrop = -114;
             //tab page
             TabPage page = matchhistoryTab;
 
@@ -355,7 +397,7 @@ namespace LeagueStats
                 pictureboxDrop = pictureboxDrop + 114;
                 labelDrop = labelDrop + 114;
                 itemDrop = itemDrop + 114;
-
+                sumDrop = sumDrop + 114;
             //Starts replicating items
 
                 #region Champ Icon
@@ -455,6 +497,14 @@ namespace LeagueStats
                             //adds it to the list
                             _visionwardLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
                             break;
+                        case 9:
+                            label_type = "timeLabel";
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _timeLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
                     }
                 }
 
@@ -498,37 +548,124 @@ namespace LeagueStats
                 }
                 #endregion
 
+                #region sumPic
 
+                for (int currentSum = 0; currentSum < sumPic.Count(); currentSum++)
+                {
+                    string pic_type = "sumPic";
+                    string pic_name = pic_type + currentSum.ToString() + match.ToString();
+                    Point sum_location = new Point(sumPic[currentSum].Location.X, sumPic[currentSum].Location.Y + sumDrop);
+                    Size pic_size = sumPic[currentSum].Size;
+                    switch (currentSum)
+                    {
+                        case 0:
+                            _sumIcon0.Add(CreatePictureBox(page, pic_name, sum_location, pic_size));
+                            break;
+                        case 1: _sumIcon1.Add(CreatePictureBox(page, pic_name, sum_location, pic_size));
+                            break;
+                    }
+                }
+                #endregion
             }
         }
 
         public static void Display_MatchHistory(PictureBox champPic, List<Label> labels)
         {
-            //Prep list of labels for use
-            Label winLabel = labels[0];
-            Label jobLabel = labels[1];
-            Label kdaLabel = labels[2];
-            Label levelLabel = labels[3];
-            Label goldLabel = labels[4];
-            Label csLabel = labels[5];
-            Label towerLabel = labels[6];
-            Label wardLabel = labels[7];
-            Label visionwardLabel = labels[8];
+            #region PictureBoxes
 
     //ChampPic
+            #region ChampPic
             for (int match = 0; match < RankMatchHistory.Count(); match++)
             {
                 string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/champion/" + RankMatchHistory[match].champ + ".png");
                 _champPic[match].ImageLocation = url;
             }
-
-    //WinLabel
-            //Cycles through all the labels of the same type
+            #endregion
+    //Item Boxes
+            #region itemBoxes
+            string itemId;
+            //itembox0
             for (int match = 0; match < RankMatchHistory.Count(); match++)
             {
-                if (RankMatchHistory[match].winner == "True") { _winLabelList[match].Text = "Win"; }
-                else { _winLabelList[match].Text = "Loss"; }
+                itemId = RankMatchHistory[match].item0;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item0[match].ImageLocation = url;
             }
+
+            //itembox1
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                itemId = RankMatchHistory[match].item1;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item1[match].ImageLocation = url;
+            }
+
+            //itembox2
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                itemId = RankMatchHistory[match].item2;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item2[match].ImageLocation = url;
+            }
+
+            //itembox3
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                itemId = RankMatchHistory[match].item3;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item3[match].ImageLocation = url;
+            }
+
+            //itembox4
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                itemId = RankMatchHistory[match].item4;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item4[match].ImageLocation = url;
+            }
+
+            //itembox5
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                itemId = RankMatchHistory[match].item5;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item5[match].ImageLocation = url;
+            }
+
+            //itembox6
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                itemId = RankMatchHistory[match].item6;
+                string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
+                _item6[match].ImageLocation = url;
+            }
+            #endregion
+    //sumIcon
+            #region sumIcon
+            //sumIcon0
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/spell/" + RankMatchHistory[match].sum0_name + ".png");
+                _sumIcon0[match].ImageLocation = url;
+            }
+            //sumIcon1
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/spell/" + RankMatchHistory[match].sum1_name + ".png");
+                _sumIcon1[match].ImageLocation = url;
+            }
+            #endregion
+
+            #endregion
+
+                #region Labels
+    //WinLabel
+                //Cycles through all the labels of the same type
+                for (int match = 0; match < RankMatchHistory.Count(); match++)
+                {
+                    if (RankMatchHistory[match].winner == "True") { _winLabelList[match].Text = "Win"; }
+                    else { _winLabelList[match].Text = "Loss"; }
+                }
     //Joblabel
             #region JobLabel
             
@@ -634,8 +771,22 @@ namespace LeagueStats
             {
                 visionwards = RankMatchHistory[match].visionwards;
                 _visionwardLabelList[match].Text = String.Format("Pink Wards Placed: {0}", visionwards);
-                
+
             }
+    //TimeLabel
+
+            string time;
+
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                time = RankMatchHistory[match].time;
+                string min = Math.Floor(Convert.ToDouble(time) / 60).ToString();
+                string sec = (Convert.ToDouble(time) % 60).ToString();
+                _timeLabelList[match].Text = String.Format("{0}:{1}", min, sec);
+            }
+
+            #endregion
+    
         }
 
         #endregion
@@ -669,6 +820,7 @@ namespace LeagueStats
         //Occurs when the tabControl changes
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             int long_size = 1200;
             int short_size = 393;
             var currentTab = tabControl.SelectedIndex;
@@ -677,60 +829,70 @@ namespace LeagueStats
                 case 0:
                     tabControl.Size = new Size(tabControl.Size.Width, short_size);
                     break;
-                case 1:
-                    //Run events
-                    tabControl.Size = new Size(tabControl.Size.Width, long_size);
+                case 1:        
+                        //Run events
+                        tabControl.Size = new Size(tabControl.Size.Width, long_size);
 
-                    //Label List
-                    List<Label> MatchHistoryLabel = new List<Label>();
-                    MatchHistoryLabel.Add(winLabel0);
-                    MatchHistoryLabel.Add(jobLabel0);
-                    MatchHistoryLabel.Add(kdaLabel0);
-                    MatchHistoryLabel.Add(levelLabel0);
-                    MatchHistoryLabel.Add(goldLabel0);
-                    MatchHistoryLabel.Add(csLabel0);
-                    MatchHistoryLabel.Add(towerLabel0);
-                    MatchHistoryLabel.Add(wardLabel0);
-                    MatchHistoryLabel.Add(visionwardLabel0);
+                        //Label List
+                        List<Label> MatchHistoryLabel = new List<Label>();
+                        MatchHistoryLabel.Add(winLabel0);
+                        MatchHistoryLabel.Add(jobLabel0);
+                        MatchHistoryLabel.Add(kdaLabel0);
+                        MatchHistoryLabel.Add(levelLabel0);
+                        MatchHistoryLabel.Add(goldLabel0);
+                        MatchHistoryLabel.Add(csLabel0);
+                        MatchHistoryLabel.Add(towerLabel0);
+                        MatchHistoryLabel.Add(wardLabel0);
+                        MatchHistoryLabel.Add(visionwardLabel0);
+                        MatchHistoryLabel.Add(timeLabel0);
 
-                    //Item List
-                    List<PictureBox> itemPic = new List<PictureBox>();
-                    itemPic.Add(itemPic0);
-                    itemPic.Add(itemPic1);
-                    itemPic.Add(itemPic2);
-                    itemPic.Add(itemPic3);
-                    itemPic.Add(itemPic4);
-                    itemPic.Add(itemPic5);
-                    itemPic.Add(itemPic6);
+                        //Item List
+                        List<PictureBox> itemPic = new List<PictureBox>();
+                        itemPic.Add(itemPic0);
+                        itemPic.Add(itemPic1);
+                        itemPic.Add(itemPic2);
+                        itemPic.Add(itemPic3);
+                        itemPic.Add(itemPic4);
+                        itemPic.Add(itemPic5);
+                        itemPic.Add(itemPic6);
 
-                    //sumPic List
-                    List<PictureBox> sumPic = new List<PictureBox>();
-                    sumPic.Add(sumPic00);
-                    sumPic.Add(sumPic10);
+                        //sumPic List
+                        List<PictureBox> sumPic = new List<PictureBox>();
+                        sumPic.Add(sumPic0);
+                        sumPic.Add(sumPic1);
 
-                    //Disable Match History template
-                    champPic0.Visible = false;
-                    winLabel0.Visible = false;
-                    jobLabel0.Visible = false;
-                    kdaLabel0.Visible = false;
-                    levelLabel0.Visible = false;
-                    goldLabel0.Visible = false;
-                    csLabel0.Visible = false;
-                    towerLabel0.Visible = false;
-                    wardLabel0.Visible = false;
-                    visionwardLabel0.Visible = false;
-                    itemPic0.Visible = false;
-                    itemPic1.Visible = false;
-                    itemPic2.Visible = false;
-                    itemPic3.Visible = false;
-                    itemPic4.Visible = false;
-                    itemPic5.Visible = false;
-                    itemPic6.Visible = false;
-
-                    //Only create match history tab if it isnt created yet
-
-                    if (_MatchHistoryCreated == false) { Display_Create_MatchHistory(matchhistoryTab, champPic0, MatchHistoryLabel, itemPic, sumPic); }
-                    Display_MatchHistory(champPic0, MatchHistoryLabel);
+                        //Disable Match History template
+                    //champPic
+                        champPic0.Visible = false;
+                    //labels
+                        winLabel0.Visible = false;
+                        jobLabel0.Visible = false;
+                        kdaLabel0.Visible = false;
+                        levelLabel0.Visible = false;
+                        goldLabel0.Visible = false;
+                        csLabel0.Visible = false;
+                        towerLabel0.Visible = false;
+                        wardLabel0.Visible = false;
+                        visionwardLabel0.Visible = false;
+                        timeLabel0.Visible = false;
+                    //itemPics
+                        itemPic0.Visible = false;
+                        itemPic1.Visible = false;
+                        itemPic2.Visible = false;
+                        itemPic3.Visible = false;
+                        itemPic4.Visible = false;
+                        itemPic5.Visible = false;
+                        itemPic6.Visible = false;
+                    //sumPics
+                        sumPic0.Visible = false;
+                        sumPic1.Visible = false;
+                    //Only display mathc history if basic api has already been called
+                    if(_BasicInfoCalled == true)
+                    {
+                        //Only create match history tab if it isnt created yet
+                        if (_MatchHistoryCreated == false) { Display_Create_MatchHistory(matchhistoryTab, champPic0, MatchHistoryLabel, itemPic, sumPic); }
+                        Display_MatchHistory(champPic0, MatchHistoryLabel);
+                    }
                     break;
             }
         }
@@ -791,9 +953,23 @@ namespace LeagueStats
         public string towers;
         public string champId;
         public string champ;
-        
+        public string item0;
+        public string item1;
+        public string item2;
+        public string item3;
+        public string item4;
+        public string item5;
+        public string item6;
+        public string sum0;
+        public string sum0_name;
+        public string sum1;
+        public string sum1_name;
+        public string time;
         //Constructors
-        public User_rankhistory(string winner, string role, string lane, string level, string kills, string deaths, string assists, string gold, string cs, string wards, string visionwards, string towers, string champId, string champ)
+        public User_rankhistory(string winner, string role, string lane, string level, string kills, string deaths, string assists, string gold, string cs, string wards, string visionwards, string towers, string champId, string champ, 
+        string item0, string item1, string item2, string item3, string item4, string item5, string item6,
+        string sum0, string sum0_name, string sum1, string sum1_name,
+        string time)
         {
             this.winner = winner;
             this.role = role;
@@ -809,6 +985,18 @@ namespace LeagueStats
             this.towers = towers;
             this.champId = champId;
             this.champ = champ;
+            this.item0 = item0;
+            this.item1 = item1;
+            this.item2 = item2;
+            this.item3 = item3;
+            this.item4 = item4;
+            this.item5 = item5;
+            this.item6 = item6;
+            this.sum0 = sum0;
+            this.sum0_name = sum0_name;
+            this.sum1 = sum1;
+            this.sum1_name = sum1_name;
+            this.time = time;
         }        
     }
 #endregion

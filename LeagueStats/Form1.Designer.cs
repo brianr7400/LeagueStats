@@ -49,6 +49,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.overviewTab = new System.Windows.Forms.TabPage();
             this.matchhistoryTab = new System.Windows.Forms.TabPage();
+            this.timeLabel0 = new System.Windows.Forms.Label();
             this.itemPic6 = new System.Windows.Forms.PictureBox();
             this.itemPic5 = new System.Windows.Forms.PictureBox();
             this.itemPic4 = new System.Windows.Forms.PictureBox();
@@ -56,8 +57,8 @@
             this.itemPic2 = new System.Windows.Forms.PictureBox();
             this.itemPic1 = new System.Windows.Forms.PictureBox();
             this.itemPic0 = new System.Windows.Forms.PictureBox();
-            this.sumPic10 = new System.Windows.Forms.PictureBox();
-            this.sumPic00 = new System.Windows.Forms.PictureBox();
+            this.sumPic1 = new System.Windows.Forms.PictureBox();
+            this.sumPic0 = new System.Windows.Forms.PictureBox();
             this.visionwardLabel0 = new System.Windows.Forms.Label();
             this.towerLabel0 = new System.Windows.Forms.Label();
             this.wardLabel0 = new System.Windows.Forms.Label();
@@ -81,8 +82,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemPic2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPic0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sumPic10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sumPic00)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sumPic1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sumPic0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.champPic0)).BeginInit();
             this.SuspendLayout();
             // 
@@ -305,6 +306,7 @@
             // matchhistoryTab
             // 
             this.matchhistoryTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.matchhistoryTab.Controls.Add(this.timeLabel0);
             this.matchhistoryTab.Controls.Add(this.itemPic6);
             this.matchhistoryTab.Controls.Add(this.itemPic5);
             this.matchhistoryTab.Controls.Add(this.itemPic4);
@@ -312,8 +314,8 @@
             this.matchhistoryTab.Controls.Add(this.itemPic2);
             this.matchhistoryTab.Controls.Add(this.itemPic1);
             this.matchhistoryTab.Controls.Add(this.itemPic0);
-            this.matchhistoryTab.Controls.Add(this.sumPic10);
-            this.matchhistoryTab.Controls.Add(this.sumPic00);
+            this.matchhistoryTab.Controls.Add(this.sumPic1);
+            this.matchhistoryTab.Controls.Add(this.sumPic0);
             this.matchhistoryTab.Controls.Add(this.visionwardLabel0);
             this.matchhistoryTab.Controls.Add(this.towerLabel0);
             this.matchhistoryTab.Controls.Add(this.wardLabel0);
@@ -329,7 +331,18 @@
             this.matchhistoryTab.Padding = new System.Windows.Forms.Padding(3);
             this.matchhistoryTab.Size = new System.Drawing.Size(936, 367);
             this.matchhistoryTab.TabIndex = 1;
-            this.matchhistoryTab.Text = "Match History";
+            this.matchhistoryTab.Text = "Ranked History";
+            // 
+            // timeLabel0
+            // 
+            this.timeLabel0.AutoSize = true;
+            this.timeLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timeLabel0.ForeColor = System.Drawing.Color.White;
+            this.timeLabel0.Location = new System.Drawing.Point(118, 91);
+            this.timeLabel0.Name = "timeLabel0";
+            this.timeLabel0.Size = new System.Drawing.Size(66, 25);
+            this.timeLabel0.TabIndex = 19;
+            this.timeLabel0.Text = "41:45";
             // 
             // itemPic6
             // 
@@ -387,6 +400,7 @@
             // 
             // itemPic0
             // 
+            this.itemPic0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.itemPic0.Location = new System.Drawing.Point(331, 31);
             this.itemPic0.Name = "itemPic0";
             this.itemPic0.Size = new System.Drawing.Size(35, 35);
@@ -394,23 +408,23 @@
             this.itemPic0.TabIndex = 12;
             this.itemPic0.TabStop = false;
             // 
-            // sumPic10
+            // sumPic1
             // 
-            this.sumPic10.Location = new System.Drawing.Point(280, 71);
-            this.sumPic10.Name = "sumPic10";
-            this.sumPic10.Size = new System.Drawing.Size(45, 45);
-            this.sumPic10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.sumPic10.TabIndex = 11;
-            this.sumPic10.TabStop = false;
+            this.sumPic1.Location = new System.Drawing.Point(280, 71);
+            this.sumPic1.Name = "sumPic1";
+            this.sumPic1.Size = new System.Drawing.Size(45, 45);
+            this.sumPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sumPic1.TabIndex = 11;
+            this.sumPic1.TabStop = false;
             // 
-            // sumPic00
+            // sumPic0
             // 
-            this.sumPic00.Location = new System.Drawing.Point(280, 21);
-            this.sumPic00.Name = "sumPic00";
-            this.sumPic00.Size = new System.Drawing.Size(45, 45);
-            this.sumPic00.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.sumPic00.TabIndex = 10;
-            this.sumPic00.TabStop = false;
+            this.sumPic0.Location = new System.Drawing.Point(280, 21);
+            this.sumPic0.Name = "sumPic0";
+            this.sumPic0.Size = new System.Drawing.Size(45, 45);
+            this.sumPic0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sumPic0.TabIndex = 10;
+            this.sumPic0.TabStop = false;
             // 
             // visionwardLabel0
             // 
@@ -470,11 +484,11 @@
             this.winLabel0.AutoSize = true;
             this.winLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.winLabel0.ForeColor = System.Drawing.Color.White;
-            this.winLabel0.Location = new System.Drawing.Point(109, 25);
+            this.winLabel0.Location = new System.Drawing.Point(109, 15);
             this.winLabel0.Name = "winLabel0";
-            this.winLabel0.Size = new System.Drawing.Size(165, 51);
+            this.winLabel0.Size = new System.Drawing.Size(118, 51);
             this.winLabel0.TabIndex = 1;
-            this.winLabel0.Text = "Winner";
+            this.winLabel0.Text = "Loss";
             // 
             // goldLabel0
             // 
@@ -490,11 +504,11 @@
             // jobLabel0
             // 
             this.jobLabel0.AutoSize = true;
-            this.jobLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jobLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jobLabel0.ForeColor = System.Drawing.Color.White;
-            this.jobLabel0.Location = new System.Drawing.Point(113, 73);
+            this.jobLabel0.Location = new System.Drawing.Point(113, 62);
             this.jobLabel0.Name = "jobLabel0";
-            this.jobLabel0.Size = new System.Drawing.Size(85, 29);
+            this.jobLabel0.Size = new System.Drawing.Size(76, 25);
             this.jobLabel0.TabIndex = 2;
             this.jobLabel0.Text = "Jungle";
             // 
@@ -512,11 +526,11 @@
             // kdaLabel0
             // 
             this.kdaLabel0.AutoSize = true;
-            this.kdaLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kdaLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.kdaLabel0.ForeColor = System.Drawing.Color.White;
-            this.kdaLabel0.Location = new System.Drawing.Point(195, 73);
+            this.kdaLabel0.Location = new System.Drawing.Point(195, 62);
             this.kdaLabel0.Name = "kdaLabel0";
-            this.kdaLabel0.Size = new System.Drawing.Size(79, 29);
+            this.kdaLabel0.Size = new System.Drawing.Size(72, 25);
             this.kdaLabel0.TabIndex = 3;
             this.kdaLabel0.Text = "12/6/8";
             // 
@@ -556,8 +570,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemPic2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPic0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sumPic10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sumPic00)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sumPic1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sumPic0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.champPic0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -602,9 +616,10 @@
         private System.Windows.Forms.PictureBox itemPic2;
         private System.Windows.Forms.PictureBox itemPic1;
         private System.Windows.Forms.PictureBox itemPic0;
-        private System.Windows.Forms.PictureBox sumPic10;
-        private System.Windows.Forms.PictureBox sumPic00;
+        private System.Windows.Forms.PictureBox sumPic1;
+        private System.Windows.Forms.PictureBox sumPic0;
         private System.Windows.Forms.PictureBox itemPic6;
+        private System.Windows.Forms.Label timeLabel0;
     }
 }
 
