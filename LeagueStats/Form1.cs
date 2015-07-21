@@ -12,11 +12,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Threading;
+
 namespace LeagueStats
 {
     public partial class LeagueStats : Form
     {
         //Startup
+        #region Startup
         public LeagueStats()
         {
             InitializeComponent();
@@ -37,11 +39,39 @@ namespace LeagueStats
         Thread _OverviewTab = new Thread(new ThreadStart(CallAPI_ranked));
         Thread _MatchHistoryTab = new Thread(new ThreadStart(CallAPI_rankhistory));
 
+        //Controll Lists
+            //summoner icon
+        static List<PictureBox> _sumIcon0 = new List<PictureBox>();
+        static List<PictureBox> _sumIcon1 = new List<PictureBox>();
+            //items
+        static List<PictureBox> _item0 = new List<PictureBox>();
+        static List<PictureBox> _item1 = new List<PictureBox>();
+        static List<PictureBox> _item2 = new List<PictureBox>();
+        static List<PictureBox> _item3 = new List<PictureBox>();
+        static List<PictureBox> _item4 = new List<PictureBox>();
+        static List<PictureBox> _item5 = new List<PictureBox>();
+        static List<PictureBox> _item6 = new List<PictureBox>();
+            //champ icon
+        static List<PictureBox> _champPic = new List<PictureBox>();
+            //labels
+        static List<Label> _winLabelList = new List<Label>();
+        static List<Label> _jobLabelList = new List<Label>();
+        static List<Label> _kdaLabelList = new List<Label>();
+        static List<Label> _levelLabelList = new List<Label>();
+        static List<Label> _goldLabelList = new List<Label>();
+        static List<Label> _csLabelList = new List<Label>();
+        static List<Label> _towerLabelList = new List<Label>();
+        static List<Label> _wardLabelList = new List<Label>();
+        static List<Label> _visionwardLabelList = new List<Label>();
+
+        static bool _MatchHistoryCreated = false;
     //creates instances of the user classes
         //List to hold  match history
         static List<User_rankhistory> RankMatchHistory = new List<User_rankhistory>();
         static User_basic currentUser = new User_basic();
         static User_ranked rankUser = new User_ranked();
+
+        #endregion
 
         #endregion
 
@@ -126,7 +156,8 @@ namespace LeagueStats
         //Gets Ranked Match History
         public static void CallAPI_rankhistory()
         {
-            
+            //Reset History incase
+            RankMatchHistory.Clear();
             //creates client to get json info
             var Client = new WebClient();
             //creates url to get json info from
@@ -143,7 +174,7 @@ namespace LeagueStats
             List<string> ChampNames = new List<string>();
             foreach (JProperty name in jsonChamp_list["data"])
             {
-                ChampNames.Add(name.ToString());
+                ChampNames.Add(name.Name);
             }
 
             //Puts all the data into the User_rankhistory list backwards so that 0 is the most recent match
@@ -158,8 +189,8 @@ namespace LeagueStats
                 string champ_name = "";
                 foreach (string name in ChampNames)
                 {
-                    string id;
-                    if (jsonChamp_list["data"][name]["id"].ToString() == champ_id)
+                    string id = jsonChamp_list["data"][name]["id"].ToString();
+                    if ( id == champ_id)
                     {
                         champ_name = name;
                         break;
@@ -190,7 +221,6 @@ namespace LeagueStats
 
         }
         
-
         #endregion
 
         //Called when the search button is pressed
@@ -220,7 +250,33 @@ namespace LeagueStats
 
         //Displays Data
         #region Display
-        
+
+        #region Create Controlls
+        public static Label CreateLabel(TabPage page, string labelName, Point cord, List<Label> labels, Font font)
+        {
+            Label newlabel = new Label();
+            newlabel.Name = labelName;
+            newlabel.Location = cord;
+            newlabel.AutoSize = true;
+            newlabel.Font = font;
+            newlabel.ForeColor = Color.White;
+            page.Controls.Add(newlabel);
+            return newlabel;
+        }
+        public static PictureBox CreatePictureBox(TabPage page, string picName, Point cord, Size boxSize)
+        {
+            PictureBox picBox = new PictureBox();
+            picBox.Name = picName;
+            picBox.Location = cord;
+            picBox.Size = boxSize;
+            picBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            picBox.ImageLocation = "http://images.kaneva.com/filestore10/5483612/7216070/blac.jpg";
+            page.Controls.Add(picBox);
+            return picBox;
+        }
+ 
+        #endregion
+
         public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
         {
 
@@ -280,70 +336,306 @@ namespace LeagueStats
             }
         }
 
-        public static void Display_MatchHistory(PictureBox champPic, Label winLabel, Label jobLabel, Label kdaLabel, Label levelLabel, Label goldLabel, Label csLabel, Label towerLabel, Label wardLabel, Label visionwardLabel)
+        public static void Display_Create_MatchHistory(TabPage matchhistoryTab, PictureBox champPic, List<Label> label_list, List<PictureBox> itemPic, List<PictureBox> sumPic)
         {
+        //INITIALIZE
+            _MatchHistoryCreated = true;
+            //Location to start
+            //int pictureboxDrop = -210;
+            int pictureboxDrop = -96;
+            int labelDrop = -114;
+            int itemDrop = 0;
+            //tab page
+            TabPage page = matchhistoryTab;
+
+            //Starts loop to replicate
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                //Drops each item by set amount
+                pictureboxDrop = pictureboxDrop + 114;
+                labelDrop = labelDrop + 114;
+                itemDrop = itemDrop + 114;
+
+            //Starts replicating items
+
+                #region Champ Icon
+
+                string name = "champPic" + match.ToString();
+                Point location = new Point (champPic.Location.X, pictureboxDrop);
+                Size size = champPic.Size;
+                _champPic.Add(CreatePictureBox(page, name, location, size));
+                #endregion
+
+                #region label
+
+                for (int current_label = 0; current_label < label_list.Count(); current_label++)
+                {
+                    string label_type = "";
+                    switch (current_label)
+                    {
+                        case 0:
+                            label_type = "winLabel";
+                            //Creates the label with the specified properties
+                            string label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            Font current_font = label_list[current_label].Font;
+                            string text = match.ToString();
+                            //adds it to the list
+                            _winLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 1:
+                            label_type = "jobLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _jobLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 2:
+                            label_type = "kdaLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _kdaLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 3:
+                            label_type = "levelLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _levelLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 4:
+                            label_type = "goldLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _goldLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 5:
+                            label_type = "csLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _csLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 6:
+                            label_type = "towerLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _towerLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 7:
+                            label_type = "wardLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _wardLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                        case 8:
+                            label_type = "visionwardLabel";
+                            //Creates the label with the specified properties
+                            label_name = label_type + match.ToString();
+                            location = new Point(label_list[current_label].Location.X, label_list[current_label].Location.Y + labelDrop);
+                            current_font = label_list[current_label].Font;
+                            //adds it to the list
+                            _visionwardLabelList.Add(CreateLabel(page, label_name, location, label_list, current_font));
+                            break;
+                    }
+                }
+
+                #endregion
+
+                #region itemPic
+
+                for (int currentitem = 0; currentitem < itemPic.Count(); currentitem++)
+                {
+                    string pic_type = "itemPic";
+                    string pic_name = "";
+                    Point item_location = new Point(0, 0);
+                    Size pic_size = new Size(1, 1);
+                    pic_name = pic_type + currentitem.ToString() + match.ToString();
+                    item_location = new Point(itemPic[currentitem].Location.X, itemPic[currentitem].Location.Y + itemDrop);
+                    pic_size = itemPic[currentitem].Size;
+                    switch (currentitem)
+                    {
+                        case 0:
+                            _item0.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                        case 1:
+                            _item1.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                        case 2:
+                            _item2.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                        case 3:
+                            _item3.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                        case 4:
+                            _item4.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                        case 5:
+                            _item5.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                        case 6:
+                            _item6.Add(CreatePictureBox(page, pic_name, item_location, pic_size));
+                            break;
+                    }
+                }
+                #endregion
+
+
+            }
+        }
+
+        public static void Display_MatchHistory(PictureBox champPic, List<Label> labels)
+        {
+            //Prep list of labels for use
+            Label winLabel = labels[0];
+            Label jobLabel = labels[1];
+            Label kdaLabel = labels[2];
+            Label levelLabel = labels[3];
+            Label goldLabel = labels[4];
+            Label csLabel = labels[5];
+            Label towerLabel = labels[6];
+            Label wardLabel = labels[7];
+            Label visionwardLabel = labels[8];
+
     //ChampPic
-            string image_url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/champion/" + RankMatchHistory[0].champ + ".png");
-            champPic.ImageLocation = image_url;
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/champion/" + RankMatchHistory[match].champ + ".png");
+                _champPic[match].ImageLocation = url;
+            }
+
     //WinLabel
-            if (RankMatchHistory[0].winner == "true") { winLabel.Text = "Win"; } 
-            else { winLabel.Text = "Loss"; }
+            //Cycles through all the labels of the same type
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                if (RankMatchHistory[match].winner == "True") { _winLabelList[match].Text = "Win"; }
+                else { _winLabelList[match].Text = "Loss"; }
+            }
     //Joblabel
             #region JobLabel
-            //BOTTOM
-            if (RankMatchHistory[0].lane == "BOTTOM")
+            
+            //Cycles through all the labels of the same type
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
             {
-                switch (RankMatchHistory[0].role)
+                //BOTTOM
+                if (RankMatchHistory[match].lane == "BOTTOM")
                 {
-                    case ("DUO_CARRY"):
-                        jobLabel.Text = "ADC";
-                        break;
-                    case ("DUO_SUPPORT"):
-                        jobLabel.Text = "Support";
-                        break;
+                    switch (RankMatchHistory[match].role)
+                    {
+                        case ("DUO_CARRY"):
+                            _jobLabelList[match].Text = "ADC";
+                            break;
+                        case ("DUO_SUPPORT"):
+                            _jobLabelList[match].Text = "Support";
+                            break;
+                    }
                 }
-            }
-        //MID
-            if (RankMatchHistory[0].lane == "MIDDLE")
-            {
-                jobLabel.Text = "Mid";
-            }
-        //TOP
-            if (RankMatchHistory[0].lane == "TOP")
-            {
-                jobLabel.Text = "Top";
-            }
-        //JUNGLE
-            if (RankMatchHistory[0].lane == "NONE")
-            {
-                jobLabel.Text = "Jungle";
+                //MID
+                if (RankMatchHistory[match].lane == "MIDDLE")
+                {
+                    _jobLabelList[match].Text = "Mid";
+                }
+                //TOP
+                if (RankMatchHistory[match].lane == "TOP")
+                {
+                    _jobLabelList[match].Text = "Top";
+                }
+                //JUNGLE
+                if (RankMatchHistory[match].role == "NONE")
+                {
+                    _jobLabelList[match].Text = "Jungle";
+                }
+                
             }
             #endregion
     //KDALabel
-            string kills = RankMatchHistory[0].kills;
-            string deaths = RankMatchHistory[0].deaths;
-            string assists = RankMatchHistory[0].assists;
-            string kda = String.Format("{0}/{1}/{2}",kills,deaths,assists);
-            kdaLabel.Text = kda;
+            string kills;
+            string deaths;
+            string assists;
+            string kda;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                
+                kills = RankMatchHistory[match].kills;
+                deaths = RankMatchHistory[match].deaths;
+                assists = RankMatchHistory[match].assists;
+                kda = String.Format("{0}/{1}/{2}", kills, deaths, assists);
+                _kdaLabelList[match].Text = kda;
+                
+            }
     //LevelLabel
-            string level = RankMatchHistory[0].level;
-            levelLabel.Text = String.Format("Level: {0}", level);
+            string level;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                level = RankMatchHistory[match].level;
+                _levelLabelList[match].Text = string.Format("Level: {0}",level);
+                
+            } 
     //goldLabel
-            string gold = RankMatchHistory[0].gold;
-            goldLabel.Text = String.Format("Gold Earned: {0}", gold);
+            string gold;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                gold = RankMatchHistory[match].gold;
+                _goldLabelList[match].Text = String.Format("Gold Earned: {0}", gold);
+                
+            }
     //csLabel
-            string cs = RankMatchHistory[0].cs;
-            csLabel.Text = String.Format("Minions Killed: {0}", cs);
+            string cs;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                cs = RankMatchHistory[match].cs;
+                _csLabelList[match].Text = String.Format("Minions Killed: {0}", cs);
+                
+            }
     //towerLabel
-            string towers = RankMatchHistory[0].towers;
-            towerLabel.Text = String.Format("Towers Destroyed: {0}",towers);
+            string towers;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                towers = RankMatchHistory[match].towers;
+                _towerLabelList[match].Text = String.Format("Towers Destroyed: {0}", towers);
+                
+            }
     //wardLabel
-            string wards = RankMatchHistory[0].towers;
-            wardLabel.Text = String.Format("Wards Placed: {0}", wards);
+            string wards;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                wards = RankMatchHistory[match].wards;
+                _wardLabelList[match].Text = String.Format("Wards Placed: {0}", wards);
+                
+            }
     //visionwardLabel
-            string visionwards = RankMatchHistory[0].visionwards;
-            visionwardLabel.Text = String.Format("Pink Wards Placed: {0}", visionwards);
-
+            string visionwards;
+            
+            for (int match = 0; match < RankMatchHistory.Count(); match++)
+            {
+                visionwards = RankMatchHistory[match].visionwards;
+                _visionwardLabelList[match].Text = String.Format("Pink Wards Placed: {0}", visionwards);
+                
+            }
         }
 
         #endregion
@@ -374,13 +666,74 @@ namespace LeagueStats
         #endregion
 
         #region Tabs
-        private void tabControl_Selected(object sender, TabControlEventArgs e)
+        //Occurs when the tabControl changes
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //When Clicked gets match history data
-            //CallAPI_rankhistory();
-            Display_MatchHistory(champPic1, winLabel1, jobLabel1, kdaLabel1, levelLabel1, goldLabel1, csLabel1, towerLabel1, wardLabel1, visionwardLabel1);
-        }
+            int long_size = 1200;
+            int short_size = 393;
+            var currentTab = tabControl.SelectedIndex;
+            switch (currentTab)
+            {
+                case 0:
+                    tabControl.Size = new Size(tabControl.Size.Width, short_size);
+                    break;
+                case 1:
+                    //Run events
+                    tabControl.Size = new Size(tabControl.Size.Width, long_size);
 
+                    //Label List
+                    List<Label> MatchHistoryLabel = new List<Label>();
+                    MatchHistoryLabel.Add(winLabel0);
+                    MatchHistoryLabel.Add(jobLabel0);
+                    MatchHistoryLabel.Add(kdaLabel0);
+                    MatchHistoryLabel.Add(levelLabel0);
+                    MatchHistoryLabel.Add(goldLabel0);
+                    MatchHistoryLabel.Add(csLabel0);
+                    MatchHistoryLabel.Add(towerLabel0);
+                    MatchHistoryLabel.Add(wardLabel0);
+                    MatchHistoryLabel.Add(visionwardLabel0);
+
+                    //Item List
+                    List<PictureBox> itemPic = new List<PictureBox>();
+                    itemPic.Add(itemPic0);
+                    itemPic.Add(itemPic1);
+                    itemPic.Add(itemPic2);
+                    itemPic.Add(itemPic3);
+                    itemPic.Add(itemPic4);
+                    itemPic.Add(itemPic5);
+                    itemPic.Add(itemPic6);
+
+                    //sumPic List
+                    List<PictureBox> sumPic = new List<PictureBox>();
+                    sumPic.Add(sumPic00);
+                    sumPic.Add(sumPic10);
+
+                    //Disable Match History template
+                    champPic0.Visible = false;
+                    winLabel0.Visible = false;
+                    jobLabel0.Visible = false;
+                    kdaLabel0.Visible = false;
+                    levelLabel0.Visible = false;
+                    goldLabel0.Visible = false;
+                    csLabel0.Visible = false;
+                    towerLabel0.Visible = false;
+                    wardLabel0.Visible = false;
+                    visionwardLabel0.Visible = false;
+                    itemPic0.Visible = false;
+                    itemPic1.Visible = false;
+                    itemPic2.Visible = false;
+                    itemPic3.Visible = false;
+                    itemPic4.Visible = false;
+                    itemPic5.Visible = false;
+                    itemPic6.Visible = false;
+
+                    //Only create match history tab if it isnt created yet
+
+                    if (_MatchHistoryCreated == false) { Display_Create_MatchHistory(matchhistoryTab, champPic0, MatchHistoryLabel, itemPic, sumPic); }
+                    Display_MatchHistory(champPic0, MatchHistoryLabel);
+                    break;
+            }
+        }
         #endregion
 
         #region MenuStrip
@@ -401,7 +754,7 @@ namespace LeagueStats
 
         #endregion
 
-        static string _apikey = "c19aabb4-0d8e-44c1-ae83-4b03249382e9";
+        static string _apikey = "c19aabb4-0d8e-44c1-ae83-4b03249382e9";     
     }
     //Bases for Users
     #region Users
@@ -456,10 +809,7 @@ namespace LeagueStats
             this.towers = towers;
             this.champId = champId;
             this.champ = champ;
-        }
-
-        //public string Winner { get { return winner; } set { winner = value; } }
-        
+        }        
     }
 #endregion
 }
