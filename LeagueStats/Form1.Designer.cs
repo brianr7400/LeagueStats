@@ -69,6 +69,7 @@
             this.jobLabel0 = new System.Windows.Forms.Label();
             this.levelLabel0 = new System.Windows.Forms.Label();
             this.kdaLabel0 = new System.Windows.Forms.Label();
+            this.graphTab = new System.Windows.Forms.TabPage();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -241,7 +242,7 @@
             this.winlossLabel.AutoSize = true;
             this.winlossLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.winlossLabel.ForeColor = System.Drawing.Color.White;
-            this.winlossLabel.Location = new System.Drawing.Point(165, 103);
+            this.winlossLabel.Location = new System.Drawing.Point(163, 103);
             this.winlossLabel.Name = "winlossLabel";
             this.winlossLabel.Size = new System.Drawing.Size(104, 31);
             this.winlossLabel.TabIndex = 11;
@@ -278,6 +279,7 @@
             // 
             this.tabControl.Controls.Add(this.overviewTab);
             this.tabControl.Controls.Add(this.matchhistoryTab);
+            this.tabControl.Controls.Add(this.graphTab);
             this.tabControl.Location = new System.Drawing.Point(0, 108);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -534,6 +536,15 @@
             this.kdaLabel0.TabIndex = 3;
             this.kdaLabel0.Text = "12/6/8";
             // 
+            // graphTab
+            // 
+            this.graphTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.graphTab.Location = new System.Drawing.Point(4, 22);
+            this.graphTab.Name = "graphTab";
+            this.graphTab.Size = new System.Drawing.Size(936, 367);
+            this.graphTab.TabIndex = 2;
+            this.graphTab.Text = "Graphs";
+            // 
             // LeagueStats
             // 
             this.AcceptButton = this.searchButton;
@@ -620,6 +631,7 @@
         private System.Windows.Forms.PictureBox sumPic0;
         private System.Windows.Forms.PictureBox itemPic6;
         private System.Windows.Forms.Label timeLabel0;
+        private System.Windows.Forms.TabPage graphTab;
     }
 }
 

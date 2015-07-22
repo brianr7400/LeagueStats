@@ -268,21 +268,23 @@ namespace LeagueStats
         {
             //Gets summoner name
             _SummonerName = searchBox.Text.ToLower();
-            try
-            {
                 //Runs the CallAPI_basic method
-                CallAPI_basic();
+
+            try { CallAPI_basic(); }
+            catch { MessageBox.Show("There was an error getting basic information","API_BASIC ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error); }
                 //Runs the CallAPI_ranked method if currentUser level == 30
-                if (Convert.ToInt32(currentUser.summonerLevel) == 30) { CallAPI_ranked(); CallAPI_rankhistory(); }
+                if (Convert.ToInt32(currentUser.summonerLevel) == 30)
+                {
+                    try { CallAPI_ranked(); }
+                    catch { MessageBox.Show("There was an error getting ranked information","API_RANKED ERROR", MessageBoxButtons.OK,MessageBoxIcon.Error); }
+                    try { CallAPI_rankhistory(); }
+                    catch { MessageBox.Show("There was an error getting Ranked History","API_RANKHISTORY ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                }
 
                 //Displays the data using the Display method
                 Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
 
-            }
-            catch
-            {
-                MessageBox.Show("There was an error. Perhaps try another username");
-            }
+            
             
         }
         #endregion
@@ -339,6 +341,7 @@ namespace LeagueStats
             //changes iconBox image location
             iconBox.Visible = true;
             iconBox.ImageLocation = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/profileicon/" + currentUser.profileIconId + ".png";
+            iconBox.BorderStyle = BorderStyle.FixedSingle;
 
             //Change levelLabel
             levelLabel.Visible = true;
@@ -658,7 +661,7 @@ namespace LeagueStats
 
             #endregion
 
-                #region Labels
+            #region Labels
     //WinLabel
                 //Cycles through all the labels of the same type
                 for (int match = 0; match < RankMatchHistory.Count(); match++)
@@ -683,6 +686,9 @@ namespace LeagueStats
                         case ("DUO_SUPPORT"):
                             _jobLabelList[match].Text = "Support";
                             break;
+                        default:
+                            _jobLabelList[match].Text = "Bot";
+                            break;
                     }
                 }
                 //MID
@@ -696,7 +702,7 @@ namespace LeagueStats
                     _jobLabelList[match].Text = "Top";
                 }
                 //JUNGLE
-                if (RankMatchHistory[match].role == "NONE")
+                if (RankMatchHistory[match].lane == "JUNGLE")
                 {
                     _jobLabelList[match].Text = "Jungle";
                 }
@@ -743,7 +749,7 @@ namespace LeagueStats
             for (int match = 0; match < RankMatchHistory.Count(); match++)
             {
                 cs = RankMatchHistory[match].cs;
-                _csLabelList[match].Text = String.Format("Minions Killed: {0}", cs);
+                _csLabelList[match].Text = String.Format("Creep Score: {0}", cs);
                 
             }
     //towerLabel
@@ -775,14 +781,13 @@ namespace LeagueStats
             }
     //TimeLabel
 
-            string time;
+            int time;
 
             for (int match = 0; match < RankMatchHistory.Count(); match++)
             {
-                time = RankMatchHistory[match].time;
-                string min = Math.Floor(Convert.ToDouble(time) / 60).ToString();
-                string sec = (Convert.ToDouble(time) % 60).ToString();
-                _timeLabelList[match].Text = String.Format("{0}:{1}", min, sec);
+                time = Convert.ToInt32(RankMatchHistory[match].time);
+                var timespan = TimeSpan.FromSeconds(time);
+                _timeLabelList[match].Text = timespan.ToString(@"mm\:ss");
             }
 
             #endregion
@@ -800,7 +805,6 @@ namespace LeagueStats
             Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
             tabControl.SelectTab("overviewTab");
         }
-
         //Accepts enter key for searching
         private void searchBox_KeyDown(object sender, KeyEventArgs e)
         {
