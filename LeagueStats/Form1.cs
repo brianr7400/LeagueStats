@@ -34,10 +34,6 @@ namespace LeagueStats
 
         static string _datadragonVersion = "5.13.1";
         static string _SummonerName;
-        
-        //Creates the threads for collecting data
-        Thread _OverviewTab = new Thread(new ThreadStart(CallAPI_ranked));
-        Thread _MatchHistoryTab = new Thread(new ThreadStart(CallAPI_rankhistory));
 
         //Controll Lists
             //summoner icon
@@ -170,7 +166,7 @@ namespace LeagueStats
             //creates client to get json info
             var Client = new WebClient();
             //creates url to get json info from
-            string url = String.Format("https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + currentUser.id + "?rankedQueues=RANKED_SOLO_5x5&api_key=" + _apikey);
+            string url = String.Format("https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + currentUser.id + "?beginIndex=0&endIndex=15&api_key=" + _apikey);
             //downloads data
             var rankhistory = Client.DownloadString(url);
             JObject tempjsonRankHistory = JObject.Parse(rankhistory);
@@ -857,7 +853,7 @@ namespace LeagueStats
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            int long_size = 1200;
+            int long_size = 1750;
             int short_size = 393;
             var currentTab = tabControl.SelectedIndex;
             switch (currentTab)
