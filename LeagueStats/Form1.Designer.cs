@@ -48,6 +48,7 @@
             this.lpLabel = new System.Windows.Forms.Label();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.overviewTab = new System.Windows.Forms.TabPage();
+            this.seriesLabel = new System.Windows.Forms.Label();
             this.matchhistoryTab = new System.Windows.Forms.TabPage();
             this.timeLabel0 = new System.Windows.Forms.Label();
             this.itemPic6 = new System.Windows.Forms.PictureBox();
@@ -291,6 +292,7 @@
             // overviewTab
             // 
             this.overviewTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.overviewTab.Controls.Add(this.seriesLabel);
             this.overviewTab.Controls.Add(this.iconBox);
             this.overviewTab.Controls.Add(this.lpLabel);
             this.overviewTab.Controls.Add(this.nameLabel);
@@ -304,6 +306,18 @@
             this.overviewTab.Size = new System.Drawing.Size(936, 367);
             this.overviewTab.TabIndex = 0;
             this.overviewTab.Text = "Overview";
+            // 
+            // seriesLabel
+            // 
+            this.seriesLabel.AutoSize = true;
+            this.seriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.seriesLabel.ForeColor = System.Drawing.Color.White;
+            this.seriesLabel.Location = new System.Drawing.Point(636, 122);
+            this.seriesLabel.Name = "seriesLabel";
+            this.seriesLabel.Size = new System.Drawing.Size(260, 31);
+            this.seriesLabel.TabIndex = 14;
+            this.seriesLabel.Text = "Series: X ✔ __ __ __";
+            this.seriesLabel.Visible = false;
             // 
             // matchhistoryTab
             // 
@@ -632,6 +646,7 @@
         private System.Windows.Forms.PictureBox itemPic6;
         private System.Windows.Forms.Label timeLabel0;
         private System.Windows.Forms.TabPage graphTab;
+        private System.Windows.Forms.Label seriesLabel;
     }
 }
 

@@ -146,6 +146,11 @@ namespace LeagueStats
                 rankUser.wins = (string)jsonRankData[correctArrayLine]["wins"];
                 rankUser.losses = (string)jsonRankData[correctArrayLine]["losses"];
                 rankUser.leaguePoints = (string)jsonRankData[correctArrayLine]["leaguePoints"];
+                rankUser.series = "";
+                if (Convert.ToInt32(rankUser.leaguePoints) == 100)
+                {
+                    rankUser.series = (string)jsonRankData[correctArrayLine]["miniSeries"]["progress"];
+                }
 
                 //Closes Client session
                 Client.Dispose();
@@ -264,7 +269,7 @@ namespace LeagueStats
 
         //Called when the search button is pressed
         #region Search
-        public static void Search(TextBox searchBox, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
+        public static void Search(TextBox searchBox, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel, Label seriesLabel)
         {
             //Gets summoner name
             _SummonerName = searchBox.Text.ToLower();
@@ -282,7 +287,7 @@ namespace LeagueStats
                 }
 
                 //Displays the data using the Display method
-                Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+                Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel, seriesLabel);
 
             
             
@@ -320,7 +325,7 @@ namespace LeagueStats
  
         #endregion
 
-        public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel)
+        public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel, Label seriesLabel)
         {
 
     //STARTUP
@@ -331,6 +336,7 @@ namespace LeagueStats
             winlossLabel.Visible = false;
             rankLabel.Visible = false;
             lpLabel.Visible = false;
+            seriesLabel.Visible = false;
 
     //BASIC INFO
 
@@ -371,13 +377,41 @@ namespace LeagueStats
                 lpLabel.Visible = visible;
                 string lp = string.Format("{0} LP", rankUser.leaguePoints);
                 lpLabel.Text = lp;
+
+                //Series Label
+                if (Convert.ToInt32(rankUser.leaguePoints) == 100)
+                {
+                    seriesLabel.Visible = visible;
+                    string series = "Series:  ";
+                    foreach (char result in rankUser.series)
+                    {
+                        switch (result)
+                        {
+                            case 'W':
+                                series = series + "✔  ";
+                                break;
+                            case 'L':
+                                series = series + "X  ";
+                                break;
+                            case 'N':
+                                series = series + "__  ";
+                                break;
+                        }
+                    }
+                    seriesLabel.Text = series;
+                }
+                
             }
             else
             {
                 //set rankLabel to say "UNRANKED"
                 rankLabel.Visible = visible;
                 rankLabel.Text = "Unranked";
+                seriesLabel.Visible = false;
             }
+                
+
+                
         }
 
         public static void Display_Create_MatchHistory(TabPage matchhistoryTab, PictureBox champPic, List<Label> label_list, List<PictureBox> itemPic, List<PictureBox> sumPic)
@@ -802,7 +836,7 @@ namespace LeagueStats
         #region Searching
         private void searchButton_Click(object sender, EventArgs e)
         {
-            Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel);
+            Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel, seriesLabel);
             tabControl.SelectTab("overviewTab");
         }
         //Accepts enter key for searching
@@ -940,6 +974,7 @@ namespace LeagueStats
         public string losses;
         public string league;
         public string leaguePoints;
+        public string series;
     }
     public class User_rankhistory
     {
