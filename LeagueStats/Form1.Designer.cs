@@ -45,7 +45,6 @@
             this.levelLabel = new System.Windows.Forms.Label();
             this.winlossLabel = new System.Windows.Forms.Label();
             this.rankLabel = new System.Windows.Forms.Label();
-            this.lpLabel = new System.Windows.Forms.Label();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.overviewTab = new System.Windows.Forms.TabPage();
             this.seriesLabel = new System.Windows.Forms.Label();
@@ -170,11 +169,11 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Font = new System.Drawing.Font("Lucida Sans", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.Font = new System.Drawing.Font("Lucida Sans", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.ForeColor = System.Drawing.Color.White;
-            this.nameLabel.Location = new System.Drawing.Point(159, 9);
+            this.nameLabel.Location = new System.Drawing.Point(169, 3);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(430, 55);
+            this.nameLabel.Size = new System.Drawing.Size(565, 72);
             this.nameLabel.TabIndex = 5;
             this.nameLabel.Text = "SummonerName";
             this.nameLabel.UseMnemonic = false;
@@ -185,7 +184,7 @@
             this.iconBox.ImageLocation = "";
             this.iconBox.Location = new System.Drawing.Point(3, 3);
             this.iconBox.Name = "iconBox";
-            this.iconBox.Size = new System.Drawing.Size(150, 150);
+            this.iconBox.Size = new System.Drawing.Size(160, 160);
             this.iconBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.iconBox.TabIndex = 6;
             this.iconBox.TabStop = false;
@@ -229,11 +228,11 @@
             // levelLabel
             // 
             this.levelLabel.AutoSize = true;
-            this.levelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.levelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.levelLabel.ForeColor = System.Drawing.Color.White;
-            this.levelLabel.Location = new System.Drawing.Point(162, 64);
+            this.levelLabel.Location = new System.Drawing.Point(175, 84);
             this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Size = new System.Drawing.Size(147, 39);
+            this.levelLabel.Size = new System.Drawing.Size(160, 42);
             this.levelLabel.TabIndex = 10;
             this.levelLabel.Text = "Level 30";
             this.levelLabel.Visible = false;
@@ -241,11 +240,11 @@
             // winlossLabel
             // 
             this.winlossLabel.AutoSize = true;
-            this.winlossLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.winlossLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.winlossLabel.ForeColor = System.Drawing.Color.White;
-            this.winlossLabel.Location = new System.Drawing.Point(163, 103);
+            this.winlossLabel.Location = new System.Drawing.Point(175, 135);
             this.winlossLabel.Name = "winlossLabel";
-            this.winlossLabel.Size = new System.Drawing.Size(104, 31);
+            this.winlossLabel.Size = new System.Drawing.Size(133, 39);
             this.winlossLabel.TabIndex = 11;
             this.winlossLabel.Text = "Wins: 5";
             this.winlossLabel.Visible = false;
@@ -254,27 +253,14 @@
             // 
             this.rankLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rankLabel.AutoSize = true;
-            this.rankLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rankLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rankLabel.ForeColor = System.Drawing.Color.White;
-            this.rankLabel.Location = new System.Drawing.Point(633, 13);
+            this.rankLabel.Location = new System.Drawing.Point(384, 75);
             this.rankLabel.Name = "rankLabel";
-            this.rankLabel.Size = new System.Drawing.Size(271, 51);
+            this.rankLabel.Size = new System.Drawing.Size(302, 55);
             this.rankLabel.TabIndex = 12;
             this.rankLabel.Text = "Challenger V";
             this.rankLabel.Visible = false;
-            // 
-            // lpLabel
-            // 
-            this.lpLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lpLabel.AutoSize = true;
-            this.lpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lpLabel.ForeColor = System.Drawing.Color.White;
-            this.lpLabel.Location = new System.Drawing.Point(776, 64);
-            this.lpLabel.Name = "lpLabel";
-            this.lpLabel.Size = new System.Drawing.Size(106, 39);
-            this.lpLabel.TabIndex = 13;
-            this.lpLabel.Text = "50 LP";
-            this.lpLabel.Visible = false;
             // 
             // tabControl
             // 
@@ -294,7 +280,6 @@
             this.overviewTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
             this.overviewTab.Controls.Add(this.seriesLabel);
             this.overviewTab.Controls.Add(this.iconBox);
-            this.overviewTab.Controls.Add(this.lpLabel);
             this.overviewTab.Controls.Add(this.nameLabel);
             this.overviewTab.Controls.Add(this.rankLabel);
             this.overviewTab.Controls.Add(this.levelLabel);
@@ -310,11 +295,11 @@
             // seriesLabel
             // 
             this.seriesLabel.AutoSize = true;
-            this.seriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.seriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.seriesLabel.ForeColor = System.Drawing.Color.White;
-            this.seriesLabel.Location = new System.Drawing.Point(636, 122);
+            this.seriesLabel.Location = new System.Drawing.Point(387, 130);
             this.seriesLabel.Name = "seriesLabel";
-            this.seriesLabel.Size = new System.Drawing.Size(260, 31);
+            this.seriesLabel.Size = new System.Drawing.Size(352, 42);
             this.seriesLabel.TabIndex = 14;
             this.seriesLabel.Text = "Series: X ✔ __ __ __";
             this.seriesLabel.Visible = false;
@@ -621,7 +606,6 @@
         private System.Windows.Forms.ToolStripMenuItem updatesToolStripMenuItem;
         private System.Windows.Forms.Label winlossLabel;
         private System.Windows.Forms.Label rankLabel;
-        private System.Windows.Forms.Label lpLabel;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage overviewTab;
         private System.Windows.Forms.TabPage matchhistoryTab;

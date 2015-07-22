@@ -269,7 +269,7 @@ namespace LeagueStats
 
         //Called when the search button is pressed
         #region Search
-        public static void Search(TextBox searchBox, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel, Label seriesLabel)
+        public static void Search(TextBox searchBox, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label seriesLabel)
         {
             //Gets summoner name
             _SummonerName = searchBox.Text.ToLower();
@@ -287,7 +287,7 @@ namespace LeagueStats
                 }
 
                 //Displays the data using the Display method
-                Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel, seriesLabel);
+                Display_Overview(true, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, seriesLabel);
 
             
             
@@ -325,7 +325,7 @@ namespace LeagueStats
  
         #endregion
 
-        public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label lpLabel, Label seriesLabel)
+        public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label seriesLabel)
         {
 
     //STARTUP
@@ -335,7 +335,6 @@ namespace LeagueStats
             levelLabel.Visible = false;
             winlossLabel.Visible = false;
             rankLabel.Visible = false;
-            lpLabel.Visible = false;
             seriesLabel.Visible = false;
 
     //BASIC INFO
@@ -368,15 +367,14 @@ namespace LeagueStats
                     "Winrate: {2}%",
                     wins, losses, winrate_string);
 
+                //format lp
+                string lp = string.Format("{0} LP", rankUser.leaguePoints);
+
                 //change rankLabel
                 rankLabel.Visible = visible;
-                string rank = string.Format("{0} {1}", rankUser.tier, rankUser.division);
+                string rank = string.Format("{0} {1}  {2}", rankUser.tier, rankUser.division, lp);
                 rankLabel.Text = rank;
 
-                //change lpLabel
-                lpLabel.Visible = visible;
-                string lp = string.Format("{0} LP", rankUser.leaguePoints);
-                lpLabel.Text = lp;
 
                 //Series Label
                 if (Convert.ToInt32(rankUser.leaguePoints) == 100)
@@ -388,13 +386,13 @@ namespace LeagueStats
                         switch (result)
                         {
                             case 'W':
-                                series = series + "✔  ";
+                                series = series + "✔ ";
                                 break;
                             case 'L':
-                                series = series + "X  ";
+                                series = series + "X ";
                                 break;
                             case 'N':
-                                series = series + "__  ";
+                                series = series + "__ ";
                                 break;
                         }
                     }
@@ -836,7 +834,7 @@ namespace LeagueStats
         #region Searching
         private void searchButton_Click(object sender, EventArgs e)
         {
-            Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, lpLabel, seriesLabel);
+            Search(searchBox, iconBox, nameLabel, levelLabel, winlossLabel, rankLabel, seriesLabel);
             tabControl.SelectTab("overviewTab");
         }
         //Accepts enter key for searching
