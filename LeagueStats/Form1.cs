@@ -1029,14 +1029,17 @@ namespace LeagueStats
                 #endregion
             }
                 //Get choices from user
-                SeriesChartType typeIndex = (SeriesChartType.Line);
+            SeriesChartType typeIndex = (SeriesChartType.Line);
                 if ((string)typeSelect.SelectedItem == "Line Graph") { typeIndex = SeriesChartType.Line; }
                 if ((string)typeSelect.SelectedItem == "Bar Graph") { typeIndex = SeriesChartType.Bar; }
                 String dataIndex = (string)dataSelect.SelectedItem;
                 int colorIndex = colorSelect.SelectedIndex;
+            string colorText = colorSelect.SelectedText;
+                Color colorname = Color.FromName(colorText);
+                if (colorname == null) { colorname = Color.Red; }
 
                 //Create Data points
-                CreateSeries(mainChart, mainChart.ChartAreas["mainChartArea"], typeIndex, Color.Red, dataIndex);
+                CreateSeries(mainChart, mainChart.ChartAreas["mainChartArea"], typeIndex, colorname, dataIndex);
 
             }
 
