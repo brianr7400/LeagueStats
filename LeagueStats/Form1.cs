@@ -870,103 +870,104 @@ namespace LeagueStats
             {
                 case "KDA":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match > 0; match--)
                     {
                         double kills = Convert.ToDouble(RankMatchHistory[match].kills);
                         double deaths = Convert.ToDouble(RankMatchHistory[match].deaths);
                         double assists = Convert.ToDouble(RankMatchHistory[match].assists);
+                        if (deaths == 0) { deaths = 1; }
                         double kda = (kills + assists) / deaths;
-                        mainChart.Series[datatype].Points.AddXY(match + 1, kda);
+                        mainChart.Series[datatype].Points.AddXY(match, kda);
                         if (kda > max) { max = kda * 1.25; }
                     }
                     break;
                 case "Kills":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double kills = Convert.ToDouble(RankMatchHistory[match].kills);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, kills);
+                        mainChart.Series[datatype].Points.AddXY(match, kills);
                         if (kills > max) { max = kills * 1.25; }
                     }
                     break;
                 case "Deaths":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double deaths = Convert.ToDouble(RankMatchHistory[match].deaths);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, deaths);
+                        mainChart.Series[datatype].Points.AddXY(match, deaths);
                         if (deaths > max) { max = deaths * 1.25; }
                     }
                     break;
                 case "Assists":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double assists = Convert.ToDouble(RankMatchHistory[match].assists);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, assists);
+                        mainChart.Series[datatype].Points.AddXY(match, assists);
                         if (assists > max) { max = assists * 1.25; }
                     }
                     break;
                 case "Level":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double level = Convert.ToDouble(RankMatchHistory[match].level);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, level);
+                        mainChart.Series[datatype].Points.AddXY(match, level);
                         if (level > max) { max = level * 1.25; }
                     }
                     break;
                 case "Gold":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double gold = Convert.ToDouble(RankMatchHistory[match].gold);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, gold);
+                        mainChart.Series[datatype].Points.AddXY(match, gold);
                         if (gold > max) { max = gold * 1.25; }
                     }
                     break;
                 case "Creep Score":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double cs = Convert.ToDouble(RankMatchHistory[match].cs);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, cs);
+                        mainChart.Series[datatype].Points.AddXY(match, cs);
                         if (cs > max) { max = cs * 1.25; }
                     }
                     break;
                 case "Towers Destroyed":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double towers = Convert.ToDouble(RankMatchHistory[match].towers);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, towers);
+                        mainChart.Series[datatype].Points.AddXY(match, towers);
                         if (towers > max) { max = towers * 1.25; }
                     }
                     break;
                 case "Wards Placed":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double wards = Convert.ToDouble(RankMatchHistory[match].wards);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, wards);
+                        mainChart.Series[datatype].Points.AddXY(match, wards);
                         if (wards > max) { max = wards * 1.25; }
                     }
                     break;
                 case "Pink Wards Placed":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double visionwards = Convert.ToDouble(RankMatchHistory[match].visionwards);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, visionwards);
+                        mainChart.Series[datatype].Points.AddXY(match, visionwards);
                         if (visionwards > max) { max = visionwards * 1.25; }
                     }
                     break;
                 case "Match Length":
                     max = 0;
-                    for (int match = 0; match < RankMatchHistory.Count(); match++)
+                    for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
                         double time = Convert.ToDouble(RankMatchHistory[match].time);
-                        mainChart.Series[datatype].Points.AddXY(match + 1, time / 60);
+                        mainChart.Series[datatype].Points.AddXY(match, time / 60);
                         if (time / 60 > max) { max = (time / 60) * 1.25; }
 
                     }
@@ -977,6 +978,7 @@ namespace LeagueStats
             //mainChart.Series[datatype].Points.AddXY();
             
         }
+
         public static void Display_Graph(Chart mainChart, ComboBox dataSelect, ComboBox typeSelect, ComboBox colorSelect)
         {
             if (_GraphComboBox == false)
@@ -1068,9 +1070,9 @@ namespace LeagueStats
         //Occurs when the tabControl changes
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            int long_size = RankMatchHistory.Count * 120;
-            int short_size = 394;
+            int default_size = 394;
+            int matchhistory_size = 394;
+            if (RankMatchHistory.Count * 120 > matchhistory_size) { matchhistory_size = RankMatchHistory.Count * 120; }
             var currentTab = tabControl.SelectedIndex;
 
             //Lists
@@ -1081,12 +1083,12 @@ namespace LeagueStats
             switch (currentTab)
             {
                 case 0:
-                    tabControl.Size = new Size(tabControl.Size.Width, short_size);
+                    tabControl.Size = new Size(tabControl.Size.Width, default_size);
                     break;
                 case 1:
                     #region Ranked History
                     //Run events
-                        tabControl.Size = new Size(tabControl.Size.Width, long_size);
+                        tabControl.Size = new Size(tabControl.Size.Width, matchhistory_size);
 
                         //Label List
                         
@@ -1151,7 +1153,7 @@ namespace LeagueStats
 #endregion
                     break;
                 case 2:
-                    tabControl.Size = new Size(tabControl.Size.Width, short_size);
+                    tabControl.Size = new Size(tabControl.Size.Width, default_size);
                     Display_Graph(mainChart, dataSelect, typeSelect, colorSelect);
                     break;
             }
