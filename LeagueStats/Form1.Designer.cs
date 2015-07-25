@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LeagueStats));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.meToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchButton = new System.Windows.Forms.Button();
             this.regionBox = new System.Windows.Forms.ComboBox();
@@ -70,6 +71,13 @@
             this.levelLabel0 = new System.Windows.Forms.Label();
             this.kdaLabel0 = new System.Windows.Forms.Label();
             this.graphTab = new System.Windows.Forms.TabPage();
+            this.colorSelect = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.typeSelect = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dataSelect = new System.Windows.Forms.ComboBox();
+            this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -86,6 +94,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.sumPic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sumPic0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.champPic0)).BeginInit();
+            this.graphTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -117,23 +127,23 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.meToolStripMenuItem,
+            this.projectToolStripMenuItem,
             this.updatesToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // meToolStripMenuItem
+            // projectToolStripMenuItem
             // 
-            this.meToolStripMenuItem.Name = "meToolStripMenuItem";
-            this.meToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.meToolStripMenuItem.Text = "Me";
-            this.meToolStripMenuItem.Click += new System.EventHandler(this.meToolStripMenuItem_Click);
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.projectToolStripMenuItem.Text = "LeagueStats";
+            this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
             // 
             // updatesToolStripMenuItem
             // 
             this.updatesToolStripMenuItem.Name = "updatesToolStripMenuItem";
-            this.updatesToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.updatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.updatesToolStripMenuItem.Text = "Updates";
             this.updatesToolStripMenuItem.Click += new System.EventHandler(this.updatesToolStripMenuItem_Click);
             // 
@@ -538,11 +548,101 @@
             // graphTab
             // 
             this.graphTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.graphTab.Controls.Add(this.colorSelect);
+            this.graphTab.Controls.Add(this.label3);
+            this.graphTab.Controls.Add(this.typeSelect);
+            this.graphTab.Controls.Add(this.label2);
+            this.graphTab.Controls.Add(this.label1);
+            this.graphTab.Controls.Add(this.dataSelect);
+            this.graphTab.Controls.Add(this.mainChart);
             this.graphTab.Location = new System.Drawing.Point(4, 22);
             this.graphTab.Name = "graphTab";
             this.graphTab.Size = new System.Drawing.Size(936, 367);
             this.graphTab.TabIndex = 2;
             this.graphTab.Text = "Graphs";
+            // 
+            // colorSelect
+            // 
+            this.colorSelect.BackColor = System.Drawing.Color.White;
+            this.colorSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colorSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.colorSelect.FormattingEnabled = true;
+            this.colorSelect.Location = new System.Drawing.Point(107, 125);
+            this.colorSelect.Name = "colorSelect";
+            this.colorSelect.Size = new System.Drawing.Size(149, 28);
+            this.colorSelect.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(37, 178);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 25);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Type";
+            // 
+            // typeSelect
+            // 
+            this.typeSelect.BackColor = System.Drawing.Color.White;
+            this.typeSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.typeSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.typeSelect.FormattingEnabled = true;
+            this.typeSelect.Location = new System.Drawing.Point(107, 175);
+            this.typeSelect.Name = "typeSelect";
+            this.typeSelect.Size = new System.Drawing.Size(149, 28);
+            this.typeSelect.TabIndex = 5;
+            this.typeSelect.SelectedIndexChanged += new System.EventHandler(this.typeSelect_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(33, 128);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 25);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Color";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(40, 78);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 25);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Data";
+            // 
+            // dataSelect
+            // 
+            this.dataSelect.BackColor = System.Drawing.Color.White;
+            this.dataSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.dataSelect.FormattingEnabled = true;
+            this.dataSelect.Location = new System.Drawing.Point(107, 75);
+            this.dataSelect.Name = "dataSelect";
+            this.dataSelect.Size = new System.Drawing.Size(149, 28);
+            this.dataSelect.TabIndex = 1;
+            this.dataSelect.SelectedIndexChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
+            // 
+            // mainChart
+            // 
+            this.mainChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.mainChart.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.mainChart.BorderlineColor = System.Drawing.Color.Transparent;
+            chartArea1.Name = "mainChartArea";
+            this.mainChart.ChartAreas.Add(chartArea1);
+            this.mainChart.Location = new System.Drawing.Point(237, 3);
+            this.mainChart.Name = "mainChart";
+            this.mainChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            this.mainChart.Size = new System.Drawing.Size(696, 361);
+            this.mainChart.TabIndex = 0;
+            this.mainChart.Text = "chart1";
+            this.mainChart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.Normal;
             // 
             // LeagueStats
             // 
@@ -583,6 +683,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.sumPic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sumPic0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.champPic0)).EndInit();
+            this.graphTab.ResumeLayout(false);
+            this.graphTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -602,7 +705,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label AppName;
         private System.Windows.Forms.Label levelLabel;
-        private System.Windows.Forms.ToolStripMenuItem meToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updatesToolStripMenuItem;
         private System.Windows.Forms.Label winlossLabel;
         private System.Windows.Forms.Label rankLabel;
@@ -631,6 +734,13 @@
         private System.Windows.Forms.Label timeLabel0;
         private System.Windows.Forms.TabPage graphTab;
         private System.Windows.Forms.Label seriesLabel;
+        private System.Windows.Forms.DataVisualization.Charting.Chart mainChart;
+        private System.Windows.Forms.ComboBox dataSelect;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox typeSelect;
+        private System.Windows.Forms.ComboBox colorSelect;
     }
 }
 
