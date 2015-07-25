@@ -278,8 +278,9 @@ namespace LeagueStats
         {
             //Gets summoner name
             _SummonerName = searchBox.Text.ToLower();
-                //Runs the CallAPI_basic method
-
+            //Runs the CallAPI_basic method
+            //Resets global bools
+            _BasicInfoCalled = false;
             try { CallAPI_basic(); }
             catch (WebException e)
             {
@@ -864,7 +865,7 @@ namespace LeagueStats
             mainChartArea.AxisY.Title = datatype;
             mainChart.Series.Add(data);
             mainChart.Series[0].LabelForeColor = Color.White;
-            double max = mainChart.ChartAreas[0].AxisY.Maximum;
+            double max = 10;
             switch (datatype)
             {
                 case "KDA":
