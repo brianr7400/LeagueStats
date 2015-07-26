@@ -175,7 +175,7 @@ namespace LeagueStats
             //creates client to get json info
             var Client = new WebClient();
             //creates url to get json info from
-            string url = String.Format("https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + currentUser.id + "?rankedQueues=RANKED_SOLO_5x5&api_key=" + _apikey);
+            string url = String.Format("https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + currentUser.id + "?rankedQueues=RANKED_SOLO_5x5&beginIndex=0&endIndex=50&api_key=" + _apikey);
             //downloads data
             var rankhistory = Client.DownloadString(url);
             JObject tempjsonRankHistory = JObject.Parse(rankhistory);

@@ -71,6 +71,11 @@
             this.levelLabel0 = new System.Windows.Forms.Label();
             this.kdaLabel0 = new System.Windows.Forms.Label();
             this.graphTab = new System.Windows.Forms.TabPage();
+            this.supportCheck = new System.Windows.Forms.CheckBox();
+            this.adcCheck = new System.Windows.Forms.CheckBox();
+            this.jungleCheck = new System.Windows.Forms.CheckBox();
+            this.midCheck = new System.Windows.Forms.CheckBox();
+            this.topCheck = new System.Windows.Forms.CheckBox();
             this.colorSelect = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.typeSelect = new System.Windows.Forms.ComboBox();
@@ -78,6 +83,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataSelect = new System.Windows.Forms.ComboBox();
             this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label4 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -548,6 +554,12 @@
             // graphTab
             // 
             this.graphTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
+            this.graphTab.Controls.Add(this.label4);
+            this.graphTab.Controls.Add(this.supportCheck);
+            this.graphTab.Controls.Add(this.adcCheck);
+            this.graphTab.Controls.Add(this.jungleCheck);
+            this.graphTab.Controls.Add(this.midCheck);
+            this.graphTab.Controls.Add(this.topCheck);
             this.graphTab.Controls.Add(this.colorSelect);
             this.graphTab.Controls.Add(this.label3);
             this.graphTab.Controls.Add(this.typeSelect);
@@ -561,15 +573,85 @@
             this.graphTab.TabIndex = 2;
             this.graphTab.Text = "Graphs";
             // 
+            // supportCheck
+            // 
+            this.supportCheck.AutoSize = true;
+            this.supportCheck.Checked = true;
+            this.supportCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.supportCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.supportCheck.ForeColor = System.Drawing.Color.White;
+            this.supportCheck.Location = new System.Drawing.Point(81, 212);
+            this.supportCheck.Name = "supportCheck";
+            this.supportCheck.Size = new System.Drawing.Size(85, 24);
+            this.supportCheck.TabIndex = 12;
+            this.supportCheck.Text = "Support";
+            this.supportCheck.UseVisualStyleBackColor = true;
+            // 
+            // adcCheck
+            // 
+            this.adcCheck.AutoSize = true;
+            this.adcCheck.Checked = true;
+            this.adcCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.adcCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.adcCheck.ForeColor = System.Drawing.Color.White;
+            this.adcCheck.Location = new System.Drawing.Point(162, 182);
+            this.adcCheck.Name = "adcCheck";
+            this.adcCheck.Size = new System.Drawing.Size(62, 24);
+            this.adcCheck.TabIndex = 11;
+            this.adcCheck.Text = "ADC";
+            this.adcCheck.UseVisualStyleBackColor = true;
+            // 
+            // jungleCheck
+            // 
+            this.jungleCheck.AutoSize = true;
+            this.jungleCheck.Checked = true;
+            this.jungleCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.jungleCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jungleCheck.ForeColor = System.Drawing.Color.White;
+            this.jungleCheck.Location = new System.Drawing.Point(81, 182);
+            this.jungleCheck.Name = "jungleCheck";
+            this.jungleCheck.Size = new System.Drawing.Size(75, 24);
+            this.jungleCheck.TabIndex = 10;
+            this.jungleCheck.Text = "Jungle";
+            this.jungleCheck.UseVisualStyleBackColor = true;
+            // 
+            // midCheck
+            // 
+            this.midCheck.AutoSize = true;
+            this.midCheck.Checked = true;
+            this.midCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.midCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.midCheck.ForeColor = System.Drawing.Color.White;
+            this.midCheck.Location = new System.Drawing.Point(162, 150);
+            this.midCheck.Name = "midCheck";
+            this.midCheck.Size = new System.Drawing.Size(53, 24);
+            this.midCheck.TabIndex = 9;
+            this.midCheck.Text = "Mid";
+            this.midCheck.UseVisualStyleBackColor = true;
+            // 
+            // topCheck
+            // 
+            this.topCheck.AutoSize = true;
+            this.topCheck.Checked = true;
+            this.topCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.topCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.topCheck.ForeColor = System.Drawing.Color.White;
+            this.topCheck.Location = new System.Drawing.Point(81, 152);
+            this.topCheck.Name = "topCheck";
+            this.topCheck.Size = new System.Drawing.Size(55, 24);
+            this.topCheck.TabIndex = 8;
+            this.topCheck.Text = "Top";
+            this.topCheck.UseVisualStyleBackColor = true;
+            // 
             // colorSelect
             // 
             this.colorSelect.BackColor = System.Drawing.Color.White;
             this.colorSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
             this.colorSelect.FormattingEnabled = true;
-            this.colorSelect.Location = new System.Drawing.Point(107, 125);
+            this.colorSelect.Location = new System.Drawing.Point(81, 66);
             this.colorSelect.Name = "colorSelect";
-            this.colorSelect.Size = new System.Drawing.Size(149, 28);
+            this.colorSelect.Size = new System.Drawing.Size(174, 28);
             this.colorSelect.TabIndex = 7;
             this.colorSelect.SelectedIndexChanged += new System.EventHandler(this.colorSelect_SelectedIndexChanged);
             // 
@@ -578,7 +660,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(37, 178);
+            this.label3.Location = new System.Drawing.Point(11, 119);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 25);
             this.label3.TabIndex = 6;
@@ -590,9 +672,9 @@
             this.typeSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.typeSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
             this.typeSelect.FormattingEnabled = true;
-            this.typeSelect.Location = new System.Drawing.Point(107, 175);
+            this.typeSelect.Location = new System.Drawing.Point(81, 116);
             this.typeSelect.Name = "typeSelect";
-            this.typeSelect.Size = new System.Drawing.Size(149, 28);
+            this.typeSelect.Size = new System.Drawing.Size(174, 28);
             this.typeSelect.TabIndex = 5;
             this.typeSelect.SelectedIndexChanged += new System.EventHandler(this.typeSelect_SelectedIndexChanged);
             // 
@@ -601,7 +683,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(33, 128);
+            this.label2.Location = new System.Drawing.Point(11, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 25);
             this.label2.TabIndex = 4;
@@ -612,7 +694,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(40, 78);
+            this.label1.Location = new System.Drawing.Point(14, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 25);
             this.label1.TabIndex = 2;
@@ -624,9 +706,9 @@
             this.dataSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
             this.dataSelect.FormattingEnabled = true;
-            this.dataSelect.Location = new System.Drawing.Point(107, 75);
+            this.dataSelect.Location = new System.Drawing.Point(81, 16);
             this.dataSelect.Name = "dataSelect";
-            this.dataSelect.Size = new System.Drawing.Size(149, 28);
+            this.dataSelect.Size = new System.Drawing.Size(174, 28);
             this.dataSelect.TabIndex = 1;
             this.dataSelect.SelectedIndexChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
             // 
@@ -644,6 +726,17 @@
             this.mainChart.TabIndex = 0;
             this.mainChart.Text = "chart1";
             this.mainChart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.Normal;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(14, 179);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(66, 25);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Filter";
             // 
             // LeagueStats
             // 
@@ -742,6 +835,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox typeSelect;
         private System.Windows.Forms.ComboBox colorSelect;
+        private System.Windows.Forms.CheckBox supportCheck;
+        private System.Windows.Forms.CheckBox adcCheck;
+        private System.Windows.Forms.CheckBox jungleCheck;
+        private System.Windows.Forms.CheckBox midCheck;
+        private System.Windows.Forms.CheckBox topCheck;
+        private System.Windows.Forms.Label label4;
     }
 }
 
