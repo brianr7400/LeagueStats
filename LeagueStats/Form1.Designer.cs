@@ -136,14 +136,14 @@
             // projectToolStripMenuItem
             // 
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.projectToolStripMenuItem.Text = "LeagueStats";
             this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
             // 
             // updatesToolStripMenuItem
             // 
             this.updatesToolStripMenuItem.Name = "updatesToolStripMenuItem";
-            this.updatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updatesToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.updatesToolStripMenuItem.Text = "Updates";
             this.updatesToolStripMenuItem.Click += new System.EventHandler(this.updatesToolStripMenuItem_Click);
             // 
@@ -571,6 +571,7 @@
             this.colorSelect.Name = "colorSelect";
             this.colorSelect.Size = new System.Drawing.Size(149, 28);
             this.colorSelect.TabIndex = 7;
+            this.colorSelect.SelectedIndexChanged += new System.EventHandler(this.colorSelect_SelectedIndexChanged);
             // 
             // label3
             // 
