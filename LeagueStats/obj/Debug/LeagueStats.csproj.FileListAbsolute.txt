@@ -8,12 +8,3 @@ D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.Properties.Reso
 D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.csproj.GenerateResource.Cache
 D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.exe
 D:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.pdb
-G:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\LeagueStats.exe.config
-G:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.exe
-G:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.pdb
-G:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\LeagueStats.exe
-G:\Programming\Git\LeagueStats\LeagueStats\bin\Debug\LeagueStats.pdb
-G:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.csprojResolveAssemblyReference.cache
-G:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.LeagueStats.resources
-G:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.Properties.Resources.resources
-G:\Programming\Git\LeagueStats\LeagueStats\obj\Debug\LeagueStats.csproj.GenerateResource.Cache
