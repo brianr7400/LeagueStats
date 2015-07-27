@@ -23,18 +23,26 @@ namespace LeagueStats
         public LeagueStats()
         {
             InitializeComponent();
-            Color themeColor = new Color();
-            themeColor = Color.FromArgb(13, 98, 162);
+            Color _themeColor = new Color();
+            _themeColor = Color.FromArgb(13, 98, 162);
+            //_themeColor = Color.Maroon;
             //Colors everything
-            this.BackColor = themeColor;
-            searchBox.BackColor = themeColor;
-            regionBox.BackColor = themeColor;
+            this.BackColor = _themeColor;
+            searchBox.BackColor = _themeColor;
+            regionBox.BackColor = _themeColor;
+            overviewTab.BackColor = _themeColor;
+            matchhistoryTab.BackColor = _themeColor;
+            graphTab.BackColor = _themeColor;
         }
 
         #region Global Variables
 
         static string _datadragonVersion = "5.14.1";
         static string _SummonerName;
+
+        //Theme Color
+        static Color _themeColor = Color.FromArgb(13, 98, 162);
+        static Color _backColor = Color.FromArgb(64, 64, 64);
 
         //Controll Lists
             //summoner icon
@@ -71,7 +79,13 @@ namespace LeagueStats
         static List<Color> _colors = new List<Color>();
         static List<string> _dataType = new List<string>();
 
-        //Reset graph variables
+        //checkbox varibles
+        //Sets that checkboxes are checked
+        static bool _topCheck;
+        static bool _midCheck;
+        static bool _jungleCheck;
+        static bool _adcCheck;
+        static bool _supportCheck;
 
     //creates instances of the user classes
         //List to hold  match history
@@ -95,6 +109,7 @@ namespace LeagueStats
             using (var Client = new WebClient())
             {
                 Client.Proxy = null;
+
                 //Gets Summoner information | name, id, profileIconId, summonerLevel, revisionDate
                 string url = ("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + _SummonerName.Replace(" ", "%20") + "?api_key=" + _apikey);
                 var SummonerData = Client.DownloadString(url);
@@ -111,6 +126,13 @@ namespace LeagueStats
                 currentUser.summonerLevel = (string)(jsonSummonerData[_SummonerName]["summonerLevel"]);
                 currentUser.revisionDate = (string)(jsonSummonerData[_SummonerName]["revisionDate"]);
                 _BasicInfoCalled = true;
+
+                //Gets data dragon version
+                url = ("https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions?api_key=" + _apikey);
+                var LolVersion = Client.DownloadString(url);
+                JArray jsonLolVersion = JArray.Parse(LolVersion);
+                _datadragonVersion = (string)jsonLolVersion[0];
+
             }
 
         }
@@ -325,6 +347,7 @@ namespace LeagueStats
             newlabel.AutoSize = true;
             newlabel.Font = font;
             newlabel.ForeColor = Color.White;
+            //newlabel.BackColor = _backColor;
             page.Controls.Add(newlabel);
             return newlabel;
         }
@@ -341,7 +364,19 @@ namespace LeagueStats
             page.Controls.Add(picBox);
             return picBox;
         }
- 
+        public static void CreatePictureBox(TabPage page, Point cord, Size boxSize, string name)
+        {
+            PictureBox backBox = new PictureBox();
+            backBox.Name = name;
+            backBox.Location = cord;
+            backBox.Size = boxSize;
+            backBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            //backBox.BorderStyle = BorderStyle.FixedSingle;
+            backBox.ErrorImage = null;
+            backBox.BackColor = _backColor;
+            backBox.Image = null;
+            page.Controls.Add(backBox);
+        }
         #endregion
 
         public static void Display_Overview(bool visible, PictureBox iconBox, Label nameLabel, Label levelLabel, Label winlossLabel, Label rankLabel, Label seriesLabel)
@@ -438,9 +473,10 @@ namespace LeagueStats
             //Location to start
             //int pictureboxDrop = -210;
             int pictureboxDrop = -96;
-            int labelDrop = -114;
-            int itemDrop = -114;
-            int sumDrop = -114;
+            int labelDrop = -110;
+            int itemDrop = -105;
+            int sumDrop = -105;
+            int backplateDrop = -100;
             //tab page
             TabPage page = matchhistoryTab;
 
@@ -452,14 +488,25 @@ namespace LeagueStats
                 labelDrop = labelDrop + 114;
                 itemDrop = itemDrop + 114;
                 sumDrop = sumDrop + 114;
-            //Starts replicating items
+                backplateDrop = backplateDrop + 114;
+
+                //Starts replicating items
+                #region BackPlate
+
+                string name = "BackPlate" + match.ToString();
+                Point location = new Point(8, backplateDrop);
+                Size size = new Size(920, 105);
+                CreatePictureBox(page, location, size, name);
+
+                #endregion
 
                 #region Champ Icon
 
-                string name = "champPic" + match.ToString();
-                Point location = new Point (champPic.Location.X, pictureboxDrop);
-                Size size = champPic.Size;
+                name = "champPic" + match.ToString();
+                location = new Point (champPic.Location.X, pictureboxDrop);
+                size = champPic.Size;
                 _champPic.Add(CreatePictureBox(page, name, location, size));
+
                 #endregion
 
                 #region label
@@ -633,10 +680,13 @@ namespace LeagueStats
             {
                 string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/champion/" + RankMatchHistory[match].champ + ".png");
                 _champPic[match].ImageLocation = url;
+                _champPic[match].BringToFront();
+                _champPic[match].BackColor = _themeColor;
             }
             #endregion
     //Item Boxes
             #region itemBoxes
+
             string itemId;
             //itembox0
             for (int match = 0; match < RankMatchHistory.Count(); match++)
@@ -644,6 +694,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item0;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item0[match].ImageLocation = url;
+                _item0[match].BringToFront();
+                _item0[match].BackColor = _backColor;
             }
 
             //itembox1
@@ -652,6 +704,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item1;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item1[match].ImageLocation = url;
+                _item1[match].BringToFront();
+                _item1[match].BackColor = _backColor;
             }
 
             //itembox2
@@ -660,6 +714,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item2;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item2[match].ImageLocation = url;
+                _item2[match].BringToFront();
+                _item2[match].BackColor = _backColor;
             }
 
             //itembox3
@@ -668,6 +724,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item3;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item3[match].ImageLocation = url;
+                _item3[match].BringToFront();
+                _item3[match].BackColor = _backColor;
             }
 
             //itembox4
@@ -676,6 +734,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item4;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item4[match].ImageLocation = url;
+                _item4[match].BringToFront();
+                _item4[match].BackColor = _backColor;
             }
 
             //itembox5
@@ -684,6 +744,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item5;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item5[match].ImageLocation = url;
+                _item5[match].BringToFront();
+                _item5[match].BackColor = _backColor;
             }
 
             //itembox6
@@ -692,6 +754,8 @@ namespace LeagueStats
                 itemId = RankMatchHistory[match].item6;
                 string url = "http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/item/" + itemId + ".png";
                 _item6[match].ImageLocation = url;
+                _item6[match].BringToFront();
+                _item6[match].BackColor = _backColor;
             }
             #endregion
     //sumIcon
@@ -701,12 +765,16 @@ namespace LeagueStats
             {
                 string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/spell/" + RankMatchHistory[match].sum0_name + ".png");
                 _sumIcon0[match].ImageLocation = url;
+                _sumIcon0[match].BringToFront();
+                _sumIcon0[match].BackColor = _themeColor;
             }
             //sumIcon1
             for (int match = 0; match < RankMatchHistory.Count(); match++)
             {
                 string url = String.Format("http://ddragon.leagueoflegends.com/cdn/" + _datadragonVersion + "/img/spell/" + RankMatchHistory[match].sum1_name + ".png");
                 _sumIcon1[match].ImageLocation = url;
+                _sumIcon1[match].BringToFront();
+                _sumIcon1[match].BackColor = _themeColor;
             }
             #endregion
 
@@ -717,8 +785,18 @@ namespace LeagueStats
                 //Cycles through all the labels of the same type
                 for (int match = 0; match < RankMatchHistory.Count(); match++)
                 {
-                    if (RankMatchHistory[match].winner == "True") { _winLabelList[match].Text = "Win"; }
-                    else { _winLabelList[match].Text = "Loss"; }
+                    if (RankMatchHistory[match].winner == "True") 
+                    {
+                        _winLabelList[match].ForeColor = Color.Lime;
+                        _winLabelList[match].Text = "Win"; 
+                    }
+                    else 
+                    {
+                        _winLabelList[match].ForeColor = Color.Red;
+                        _winLabelList[match].Text = "Loss"; 
+                    }
+                    _winLabelList[match].BringToFront();
+                    _winLabelList[match].BackColor = _backColor;
                 }
     //Joblabel
             #region JobLabel
@@ -757,7 +835,8 @@ namespace LeagueStats
                 {
                     _jobLabelList[match].Text = "Jungle";
                 }
-                
+                _jobLabelList[match].BringToFront();
+                _jobLabelList[match].BackColor = _backColor;
             }
             #endregion
     //KDALabel
@@ -774,7 +853,8 @@ namespace LeagueStats
                 assists = RankMatchHistory[match].assists;
                 kda = String.Format("{0}/{1}/{2}", kills, deaths, assists);
                 _kdaLabelList[match].Text = kda;
-                
+                _kdaLabelList[match].BringToFront();
+                _kdaLabelList[match].BackColor = _backColor;
             }
     //LevelLabel
             string level;
@@ -783,7 +863,8 @@ namespace LeagueStats
             {
                 level = RankMatchHistory[match].level;
                 _levelLabelList[match].Text = string.Format("Level: {0}",level);
-                
+                _levelLabelList[match].BringToFront();
+                _levelLabelList[match].BackColor = _backColor;
             } 
     //goldLabel
             string gold;
@@ -792,7 +873,8 @@ namespace LeagueStats
             {
                 gold = RankMatchHistory[match].gold;
                 _goldLabelList[match].Text = String.Format("Gold Earned: {0}", gold);
-                
+                _goldLabelList[match].BringToFront();
+                _goldLabelList[match].BackColor = _backColor;
             }
     //csLabel
             string cs;
@@ -801,7 +883,8 @@ namespace LeagueStats
             {
                 cs = RankMatchHistory[match].cs;
                 _csLabelList[match].Text = String.Format("Creep Score: {0}", cs);
-                
+                _csLabelList[match].BringToFront();
+                _csLabelList[match].BackColor = _backColor;
             }
     //towerLabel
             string towers;
@@ -810,7 +893,8 @@ namespace LeagueStats
             {
                 towers = RankMatchHistory[match].towers;
                 _towerLabelList[match].Text = String.Format("Towers Destroyed: {0}", towers);
-                
+                _towerLabelList[match].BringToFront();
+                _towerLabelList[match].BackColor = _backColor;
             }
     //wardLabel
             string wards;
@@ -819,7 +903,8 @@ namespace LeagueStats
             {
                 wards = RankMatchHistory[match].wards;
                 _wardLabelList[match].Text = String.Format("Wards Placed: {0}", wards);
-                
+                _wardLabelList[match].BringToFront();
+                _wardLabelList[match].BackColor = _backColor;
             }
     //visionwardLabel
             string visionwards;
@@ -828,7 +913,8 @@ namespace LeagueStats
             {
                 visionwards = RankMatchHistory[match].visionwards;
                 _visionwardLabelList[match].Text = String.Format("Pink Wards Placed: {0}", visionwards);
-
+                _visionwardLabelList[match].BringToFront();
+                _visionwardLabelList[match].BackColor = _backColor;
             }
     //TimeLabel
 
@@ -839,10 +925,42 @@ namespace LeagueStats
                 time = Convert.ToInt32(RankMatchHistory[match].time);
                 var timespan = TimeSpan.FromSeconds(time);
                 _timeLabelList[match].Text = timespan.ToString(@"mm\:ss");
+                _timeLabelList[match].BringToFront();
+                _timeLabelList[match].BackColor = _backColor;
             }
 
             #endregion
     
+        }
+
+        public static bool Display_Filter(int match)
+        {
+            bool pass = true;
+            //Top
+            if (_topCheck == false && RankMatchHistory[match].lane == "TOP")
+            {
+                pass = false;
+            }
+            //Mid
+            if (_midCheck == false && RankMatchHistory[match].lane == "MIDDLE")
+            {
+                pass = false;
+            }
+            //Jungle
+            if (_jungleCheck == false && RankMatchHistory[match].lane == "JUNGLE")
+            {
+                pass = false;
+            }
+            //ADC
+            if (_adcCheck == false && RankMatchHistory[match].role == "DUO_CARRY")
+            {
+                pass = false;
+            }
+            if (_supportCheck == false && RankMatchHistory[match].role == "DUO_SUPPORT")
+            {
+                pass = false;
+            }
+            return pass;
         }
 
         public static void CreateSeries(Chart mainChart, ChartArea mainChartArea, SeriesChartType chartType, Color colorChoice, string datatype)
@@ -870,120 +988,180 @@ namespace LeagueStats
             mainChart.Series[0].LabelForeColor = Color.White;
             mainChart.Series[0].BorderWidth = 5;
             double max = 10;
+            int chartnum = 1;
             switch (datatype)
             {
                 case "KDA":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double kills = Convert.ToDouble(RankMatchHistory[match].kills);
-                        double deaths = Convert.ToDouble(RankMatchHistory[match].deaths);
-                        double assists = Convert.ToDouble(RankMatchHistory[match].assists);
-                        if (deaths == 0) { deaths = 1; }
-                        double kda = (kills + assists) / deaths;
-                        mainChart.Series[datatype].Points.AddXY(match, kda);
-                        if (kda > max) { max = kda * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double kills = Convert.ToDouble(RankMatchHistory[match].kills);
+                            double deaths = Convert.ToDouble(RankMatchHistory[match].deaths);
+                            double assists = Convert.ToDouble(RankMatchHistory[match].assists);
+                            if (deaths == 0) { deaths = 1; }
+                            double kda = (kills + assists) / deaths;
+                            mainChart.Series[datatype].Points.AddXY(chartnum, kda);
+                            if (kda > max) { max = kda * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Kills":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double kills = Convert.ToDouble(RankMatchHistory[match].kills);
-                        mainChart.Series[datatype].Points.AddXY(match, kills);
-                        if (kills > max) { max = kills * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double kills = Convert.ToDouble(RankMatchHistory[match].kills);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, kills);
+                            if (kills > max) { max = kills * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Deaths":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double deaths = Convert.ToDouble(RankMatchHistory[match].deaths);
-                        mainChart.Series[datatype].Points.AddXY(match, deaths);
-                        if (deaths > max) { max = deaths * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double deaths = Convert.ToDouble(RankMatchHistory[match].deaths);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, deaths);
+                            if (deaths > max) { max = deaths * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Assists":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double assists = Convert.ToDouble(RankMatchHistory[match].assists);
-                        mainChart.Series[datatype].Points.AddXY(match, assists);
-                        if (assists > max) { max = assists * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double assists = Convert.ToDouble(RankMatchHistory[match].assists);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, assists);
+                            if (assists > max) { max = assists * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Level":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double level = Convert.ToDouble(RankMatchHistory[match].level);
-                        mainChart.Series[datatype].Points.AddXY(match, level);
-                        if (level > max) { max = level * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double level = Convert.ToDouble(RankMatchHistory[match].level);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, level);
+                            if (level > max) { max = level * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Gold":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double gold = Convert.ToDouble(RankMatchHistory[match].gold);
-                        mainChart.Series[datatype].Points.AddXY(match, gold);
-                        if (gold > max) { max = gold * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double gold = Convert.ToDouble(RankMatchHistory[match].gold);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, gold);
+                            if (gold > max) { max = gold * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Creep Score":
+                    chartnum = 1;
                     max = 0;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double cs = Convert.ToDouble(RankMatchHistory[match].cs);
-                        mainChart.Series[datatype].Points.AddXY(match, cs);
-                        if (cs > max) { max = cs * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double cs = Convert.ToDouble(RankMatchHistory[match].cs);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, cs);
+                            if (cs > max) { max = cs * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Towers Destroyed":
                     max = 0;
+                    chartnum = 1;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double towers = Convert.ToDouble(RankMatchHistory[match].towers);
-                        mainChart.Series[datatype].Points.AddXY(match, towers);
-                        if (towers > max) { max = towers * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double towers = Convert.ToDouble(RankMatchHistory[match].towers);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, towers);
+                            if (towers > max) { max = towers * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Wards Placed":
+                    chartnum = 1;
                     max = 0;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double wards = Convert.ToDouble(RankMatchHistory[match].wards);
-                        mainChart.Series[datatype].Points.AddXY(match, wards);
-                        if (wards > max) { max = wards * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double wards = Convert.ToDouble(RankMatchHistory[match].wards);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, wards);
+                            if (wards > max) { max = wards * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Pink Wards Placed":
+                    chartnum = 1;
                     max = 0;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double visionwards = Convert.ToDouble(RankMatchHistory[match].visionwards);
-                        mainChart.Series[datatype].Points.AddXY(match, visionwards);
-                        if (visionwards > max) { max = visionwards * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double visionwards = Convert.ToDouble(RankMatchHistory[match].visionwards);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, visionwards);
+                            if (visionwards > max) { max = visionwards * 1.25; }
+                            chartnum++;
+                        }
                     }
                     break;
                 case "Match Length":
+                    chartnum = 1;
                     max = 0;
                     for (int match = RankMatchHistory.Count() - 1; match >= 0; match--)
                     {
-                        double time = Convert.ToDouble(RankMatchHistory[match].time);
-                        mainChart.Series[datatype].Points.AddXY(match, time / 60);
-                        if (time / 60 > max) { max = (time / 60) * 1.25; }
+                        if (Display_Filter(match) == true)
+                        {
+                            double time = Convert.ToDouble(RankMatchHistory[match].time);
+                            mainChart.Series[datatype].Points.AddXY(chartnum, time / 60);
+                            if (time / 60 > max) { max = (time / 60) * 1.25; }
+                            chartnum++;
+                        }
 
                     }
                     break;
                     
             }
             mainChart.ChartAreas[0].AxisY.Maximum = max;
+            if (mainChart.Series[0].Points.Count() == 1)
+            {
+                mainChart.Series[0].ChartType = SeriesChartType.Point;
+            }
             //mainChart.Series[datatype].Points.AddXY();
             
         }
 
-        public static void Display_Graph(Chart mainChart, ComboBox dataSelect, ComboBox typeSelect, ComboBox colorSelect)
+        public static void Display_Graph(Chart mainChart, ComboBox dataSelect, ComboBox typeSelect, ComboBox colorSelect, CheckBox topCheckBox, CheckBox midCheckBox, CheckBox jungleCheckBox, CheckBox adcCheckBox, CheckBox supportCheckBox)
         {
             if (_GraphComboBox == false)
             {
@@ -1024,11 +1202,13 @@ namespace LeagueStats
                 }
                 typeSelect.Items.Add("Line Graph");
                 typeSelect.Items.Add("Bar Graph");
+                typeSelect.Items.Add("Point Graph");
 
                 //Initializies combo boxes only once
                 colorSelect.SelectedIndex = 0;
                 typeSelect.SelectedIndex = 0;
                 dataSelect.SelectedIndex = 0;
+
                 _GraphComboBox = true;
                 #endregion
             }
@@ -1036,16 +1216,23 @@ namespace LeagueStats
             SeriesChartType typeIndex = (SeriesChartType.Line);
                 if ((string)typeSelect.SelectedItem == "Line Graph") { typeIndex = SeriesChartType.Line; }
                 if ((string)typeSelect.SelectedItem == "Bar Graph") { typeIndex = SeriesChartType.Column; }
+                if ((string)typeSelect.SelectedItem == "Point Graph") { typeIndex = SeriesChartType.Point; }
                 String dataIndex = (string)dataSelect.SelectedItem;
                 int colorIndex = colorSelect.SelectedIndex;
                 Color colorName = (Color)colorSelect.SelectedItem;
+                //Sets that checkboxes are checked
+                _topCheck = topCheckBox.Checked;
+                _midCheck = midCheckBox.Checked;
+                _jungleCheck = jungleCheckBox.Checked;
+                _adcCheck = adcCheckBox.Checked;
+                _supportCheck = supportCheckBox.Checked;
                 //Create Data points
                 CreateSeries(mainChart, mainChart.ChartAreas["mainChartArea"], typeIndex, colorName, dataIndex);
 
             }
 
         #endregion
-  
+
         #endregion
 
         #region Form Controlls
@@ -1123,6 +1310,8 @@ namespace LeagueStats
                         sumPic.Add(sumPic1);
 
                         //Disable Match History template
+                    //backplatePic
+                        backplate0.Visible = false;
                     //champPic
                         champPic0.Visible = false;
                     //labels
@@ -1158,7 +1347,7 @@ namespace LeagueStats
                     break;
                 case 2:
                     tabControl.Size = new Size(tabControl.Size.Width, default_size);
-                    Display_Graph(mainChart, dataSelect, typeSelect, colorSelect);
+                    Display_Graph(mainChart, dataSelect, typeSelect, colorSelect, topCheck,midCheck,jungleCheck,adcCheck,supportCheck);
                     break;
             }
         }
@@ -1186,7 +1375,7 @@ namespace LeagueStats
         {
             if (_GraphComboBox == true)
             {
-                Display_Graph(mainChart, dataSelect, typeSelect, colorSelect);
+                Display_Graph(mainChart, dataSelect, typeSelect, colorSelect, topCheck, midCheck, jungleCheck, adcCheck,supportCheck);
             }
         }
 
@@ -1194,7 +1383,7 @@ namespace LeagueStats
         {
             if (_GraphComboBox == true)
             {
-                Display_Graph(mainChart, dataSelect, typeSelect, colorSelect);
+                Display_Graph(mainChart, dataSelect, typeSelect, colorSelect, topCheck, midCheck, jungleCheck, adcCheck, supportCheck);
             }
         }
 
@@ -1202,7 +1391,7 @@ namespace LeagueStats
         {
             if (_GraphComboBox == true)
             {
-                Display_Graph(mainChart, dataSelect, typeSelect, colorSelect);
+                Display_Graph(mainChart, dataSelect, typeSelect, colorSelect, topCheck, midCheck, jungleCheck, adcCheck, supportCheck);
             }     
         }
         #endregion

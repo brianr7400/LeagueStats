@@ -50,7 +50,6 @@
             this.overviewTab = new System.Windows.Forms.TabPage();
             this.seriesLabel = new System.Windows.Forms.Label();
             this.matchhistoryTab = new System.Windows.Forms.TabPage();
-            this.timeLabel0 = new System.Windows.Forms.Label();
             this.itemPic6 = new System.Windows.Forms.PictureBox();
             this.itemPic5 = new System.Windows.Forms.PictureBox();
             this.itemPic4 = new System.Windows.Forms.PictureBox();
@@ -63,14 +62,17 @@
             this.visionwardLabel0 = new System.Windows.Forms.Label();
             this.towerLabel0 = new System.Windows.Forms.Label();
             this.wardLabel0 = new System.Windows.Forms.Label();
-            this.champPic0 = new System.Windows.Forms.PictureBox();
             this.csLabel0 = new System.Windows.Forms.Label();
-            this.winLabel0 = new System.Windows.Forms.Label();
             this.goldLabel0 = new System.Windows.Forms.Label();
-            this.jobLabel0 = new System.Windows.Forms.Label();
             this.levelLabel0 = new System.Windows.Forms.Label();
+            this.timeLabel0 = new System.Windows.Forms.Label();
             this.kdaLabel0 = new System.Windows.Forms.Label();
+            this.jobLabel0 = new System.Windows.Forms.Label();
+            this.champPic0 = new System.Windows.Forms.PictureBox();
+            this.winLabel0 = new System.Windows.Forms.Label();
+            this.backplate0 = new System.Windows.Forms.PictureBox();
             this.graphTab = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.supportCheck = new System.Windows.Forms.CheckBox();
             this.adcCheck = new System.Windows.Forms.CheckBox();
             this.jungleCheck = new System.Windows.Forms.CheckBox();
@@ -83,7 +85,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataSelect = new System.Windows.Forms.ComboBox();
             this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label4 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -100,6 +101,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sumPic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sumPic0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.champPic0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.backplate0)).BeginInit();
             this.graphTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.SuspendLayout();
@@ -323,7 +325,6 @@
             // matchhistoryTab
             // 
             this.matchhistoryTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(98)))), ((int)(((byte)(162)))));
-            this.matchhistoryTab.Controls.Add(this.timeLabel0);
             this.matchhistoryTab.Controls.Add(this.itemPic6);
             this.matchhistoryTab.Controls.Add(this.itemPic5);
             this.matchhistoryTab.Controls.Add(this.itemPic4);
@@ -336,13 +337,15 @@
             this.matchhistoryTab.Controls.Add(this.visionwardLabel0);
             this.matchhistoryTab.Controls.Add(this.towerLabel0);
             this.matchhistoryTab.Controls.Add(this.wardLabel0);
-            this.matchhistoryTab.Controls.Add(this.champPic0);
             this.matchhistoryTab.Controls.Add(this.csLabel0);
-            this.matchhistoryTab.Controls.Add(this.winLabel0);
             this.matchhistoryTab.Controls.Add(this.goldLabel0);
-            this.matchhistoryTab.Controls.Add(this.jobLabel0);
             this.matchhistoryTab.Controls.Add(this.levelLabel0);
+            this.matchhistoryTab.Controls.Add(this.timeLabel0);
             this.matchhistoryTab.Controls.Add(this.kdaLabel0);
+            this.matchhistoryTab.Controls.Add(this.jobLabel0);
+            this.matchhistoryTab.Controls.Add(this.champPic0);
+            this.matchhistoryTab.Controls.Add(this.winLabel0);
+            this.matchhistoryTab.Controls.Add(this.backplate0);
             this.matchhistoryTab.Location = new System.Drawing.Point(4, 22);
             this.matchhistoryTab.Name = "matchhistoryTab";
             this.matchhistoryTab.Padding = new System.Windows.Forms.Padding(3);
@@ -350,20 +353,10 @@
             this.matchhistoryTab.TabIndex = 1;
             this.matchhistoryTab.Text = "Ranked History";
             // 
-            // timeLabel0
-            // 
-            this.timeLabel0.AutoSize = true;
-            this.timeLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeLabel0.ForeColor = System.Drawing.Color.White;
-            this.timeLabel0.Location = new System.Drawing.Point(118, 91);
-            this.timeLabel0.Name = "timeLabel0";
-            this.timeLabel0.Size = new System.Drawing.Size(66, 25);
-            this.timeLabel0.TabIndex = 19;
-            this.timeLabel0.Text = "41:45";
-            // 
             // itemPic6
             // 
-            this.itemPic6.Location = new System.Drawing.Point(454, 52);
+            this.itemPic6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.itemPic6.Location = new System.Drawing.Point(494, 41);
             this.itemPic6.Name = "itemPic6";
             this.itemPic6.Size = new System.Drawing.Size(35, 35);
             this.itemPic6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -372,7 +365,8 @@
             // 
             // itemPic5
             // 
-            this.itemPic5.Location = new System.Drawing.Point(413, 72);
+            this.itemPic5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.itemPic5.Location = new System.Drawing.Point(453, 61);
             this.itemPic5.Name = "itemPic5";
             this.itemPic5.Size = new System.Drawing.Size(35, 35);
             this.itemPic5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -381,7 +375,8 @@
             // 
             // itemPic4
             // 
-            this.itemPic4.Location = new System.Drawing.Point(372, 72);
+            this.itemPic4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.itemPic4.Location = new System.Drawing.Point(412, 61);
             this.itemPic4.Name = "itemPic4";
             this.itemPic4.Size = new System.Drawing.Size(35, 35);
             this.itemPic4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -390,7 +385,8 @@
             // 
             // itemPic3
             // 
-            this.itemPic3.Location = new System.Drawing.Point(331, 72);
+            this.itemPic3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.itemPic3.Location = new System.Drawing.Point(371, 61);
             this.itemPic3.Name = "itemPic3";
             this.itemPic3.Size = new System.Drawing.Size(35, 35);
             this.itemPic3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -399,7 +395,8 @@
             // 
             // itemPic2
             // 
-            this.itemPic2.Location = new System.Drawing.Point(413, 31);
+            this.itemPic2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.itemPic2.Location = new System.Drawing.Point(453, 20);
             this.itemPic2.Name = "itemPic2";
             this.itemPic2.Size = new System.Drawing.Size(35, 35);
             this.itemPic2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -408,7 +405,8 @@
             // 
             // itemPic1
             // 
-            this.itemPic1.Location = new System.Drawing.Point(372, 31);
+            this.itemPic1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.itemPic1.Location = new System.Drawing.Point(412, 20);
             this.itemPic1.Name = "itemPic1";
             this.itemPic1.Size = new System.Drawing.Size(35, 35);
             this.itemPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -417,8 +415,9 @@
             // 
             // itemPic0
             // 
+            this.itemPic0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.itemPic0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.itemPic0.Location = new System.Drawing.Point(331, 31);
+            this.itemPic0.Location = new System.Drawing.Point(371, 20);
             this.itemPic0.Name = "itemPic0";
             this.itemPic0.Size = new System.Drawing.Size(35, 35);
             this.itemPic0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -427,7 +426,8 @@
             // 
             // sumPic1
             // 
-            this.sumPic1.Location = new System.Drawing.Point(280, 71);
+            this.sumPic1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.sumPic1.Location = new System.Drawing.Point(320, 60);
             this.sumPic1.Name = "sumPic1";
             this.sumPic1.Size = new System.Drawing.Size(45, 45);
             this.sumPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -436,7 +436,8 @@
             // 
             // sumPic0
             // 
-            this.sumPic0.Location = new System.Drawing.Point(280, 21);
+            this.sumPic0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.sumPic0.Location = new System.Drawing.Point(320, 10);
             this.sumPic0.Name = "sumPic0";
             this.sumPic0.Size = new System.Drawing.Size(45, 45);
             this.sumPic0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -446,110 +447,142 @@
             // visionwardLabel0
             // 
             this.visionwardLabel0.AutoSize = true;
-            this.visionwardLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.visionwardLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.visionwardLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.visionwardLabel0.ForeColor = System.Drawing.Color.White;
-            this.visionwardLabel0.Location = new System.Drawing.Point(705, 86);
+            this.visionwardLabel0.Location = new System.Drawing.Point(718, 75);
             this.visionwardLabel0.Name = "visionwardLabel0";
-            this.visionwardLabel0.Size = new System.Drawing.Size(218, 25);
+            this.visionwardLabel0.Size = new System.Drawing.Size(188, 24);
             this.visionwardLabel0.TabIndex = 8;
             this.visionwardLabel0.Text = "Pink Wards Placed: 1";
             // 
             // towerLabel0
             // 
             this.towerLabel0.AutoSize = true;
-            this.towerLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.towerLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.towerLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.towerLabel0.ForeColor = System.Drawing.Color.White;
-            this.towerLabel0.Location = new System.Drawing.Point(705, 28);
+            this.towerLabel0.Location = new System.Drawing.Point(718, 15);
             this.towerLabel0.Name = "towerLabel0";
-            this.towerLabel0.Size = new System.Drawing.Size(210, 25);
+            this.towerLabel0.Size = new System.Drawing.Size(183, 24);
             this.towerLabel0.TabIndex = 9;
             this.towerLabel0.Text = "Towers Destroyed: 2";
             // 
             // wardLabel0
             // 
             this.wardLabel0.AutoSize = true;
-            this.wardLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wardLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.wardLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.wardLabel0.ForeColor = System.Drawing.Color.White;
-            this.wardLabel0.Location = new System.Drawing.Point(705, 57);
+            this.wardLabel0.Location = new System.Drawing.Point(719, 45);
             this.wardLabel0.Name = "wardLabel0";
-            this.wardLabel0.Size = new System.Drawing.Size(170, 25);
+            this.wardLabel0.Size = new System.Drawing.Size(147, 24);
             this.wardLabel0.TabIndex = 7;
             this.wardLabel0.Text = "Wards Placed: 9";
             // 
+            // csLabel0
+            // 
+            this.csLabel0.AutoSize = true;
+            this.csLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.csLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.csLabel0.ForeColor = System.Drawing.Color.White;
+            this.csLabel0.Location = new System.Drawing.Point(536, 75);
+            this.csLabel0.Name = "csLabel0";
+            this.csLabel0.Size = new System.Drawing.Size(167, 24);
+            this.csLabel0.TabIndex = 6;
+            this.csLabel0.Text = "Minions Killed: 233";
+            // 
+            // goldLabel0
+            // 
+            this.goldLabel0.AutoSize = true;
+            this.goldLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.goldLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.goldLabel0.ForeColor = System.Drawing.Color.White;
+            this.goldLabel0.Location = new System.Drawing.Point(536, 45);
+            this.goldLabel0.Name = "goldLabel0";
+            this.goldLabel0.Size = new System.Drawing.Size(177, 24);
+            this.goldLabel0.TabIndex = 5;
+            this.goldLabel0.Text = "Gold Earned: 13955";
+            // 
+            // levelLabel0
+            // 
+            this.levelLabel0.AutoSize = true;
+            this.levelLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.levelLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.levelLabel0.ForeColor = System.Drawing.Color.White;
+            this.levelLabel0.Location = new System.Drawing.Point(536, 15);
+            this.levelLabel0.Name = "levelLabel0";
+            this.levelLabel0.Size = new System.Drawing.Size(85, 24);
+            this.levelLabel0.TabIndex = 4;
+            this.levelLabel0.Text = "Level: 17";
+            // 
+            // timeLabel0
+            // 
+            this.timeLabel0.AutoSize = true;
+            this.timeLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.timeLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timeLabel0.ForeColor = System.Drawing.Color.White;
+            this.timeLabel0.Location = new System.Drawing.Point(227, 30);
+            this.timeLabel0.Name = "timeLabel0";
+            this.timeLabel0.Size = new System.Drawing.Size(87, 33);
+            this.timeLabel0.TabIndex = 19;
+            this.timeLabel0.Text = "41:45";
+            // 
+            // kdaLabel0
+            // 
+            this.kdaLabel0.AutoSize = true;
+            this.kdaLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.kdaLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kdaLabel0.ForeColor = System.Drawing.Color.White;
+            this.kdaLabel0.Location = new System.Drawing.Point(224, 71);
+            this.kdaLabel0.Name = "kdaLabel0";
+            this.kdaLabel0.Size = new System.Drawing.Size(90, 31);
+            this.kdaLabel0.TabIndex = 3;
+            this.kdaLabel0.Text = "12/6/8";
+            // 
+            // jobLabel0
+            // 
+            this.jobLabel0.AutoSize = true;
+            this.jobLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.jobLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jobLabel0.ForeColor = System.Drawing.Color.White;
+            this.jobLabel0.Location = new System.Drawing.Point(116, 68);
+            this.jobLabel0.Name = "jobLabel0";
+            this.jobLabel0.Size = new System.Drawing.Size(111, 37);
+            this.jobLabel0.TabIndex = 2;
+            this.jobLabel0.Text = "Jungle";
+            // 
             // champPic0
             // 
-            this.champPic0.Location = new System.Drawing.Point(17, 21);
+            this.champPic0.BackColor = System.Drawing.Color.Transparent;
+            this.champPic0.Location = new System.Drawing.Point(15, 10);
             this.champPic0.Name = "champPic0";
             this.champPic0.Size = new System.Drawing.Size(95, 95);
             this.champPic0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.champPic0.TabIndex = 0;
             this.champPic0.TabStop = false;
             // 
-            // csLabel0
-            // 
-            this.csLabel0.AutoSize = true;
-            this.csLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.csLabel0.ForeColor = System.Drawing.Color.White;
-            this.csLabel0.Location = new System.Drawing.Point(495, 86);
-            this.csLabel0.Name = "csLabel0";
-            this.csLabel0.Size = new System.Drawing.Size(194, 25);
-            this.csLabel0.TabIndex = 6;
-            this.csLabel0.Text = "Minions Killed: 233";
-            // 
             // winLabel0
             // 
             this.winLabel0.AutoSize = true;
-            this.winLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.winLabel0.ForeColor = System.Drawing.Color.White;
-            this.winLabel0.Location = new System.Drawing.Point(109, 15);
+            this.winLabel0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.winLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.winLabel0.ForeColor = System.Drawing.Color.Firebrick;
+            this.winLabel0.Location = new System.Drawing.Point(113, 13);
             this.winLabel0.Name = "winLabel0";
-            this.winLabel0.Size = new System.Drawing.Size(118, 51);
+            this.winLabel0.Size = new System.Drawing.Size(130, 55);
             this.winLabel0.TabIndex = 1;
             this.winLabel0.Text = "Loss";
             // 
-            // goldLabel0
+            // backplate0
             // 
-            this.goldLabel0.AutoSize = true;
-            this.goldLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.goldLabel0.ForeColor = System.Drawing.Color.White;
-            this.goldLabel0.Location = new System.Drawing.Point(495, 57);
-            this.goldLabel0.Name = "goldLabel0";
-            this.goldLabel0.Size = new System.Drawing.Size(204, 25);
-            this.goldLabel0.TabIndex = 5;
-            this.goldLabel0.Text = "Gold Earned: 13955";
-            // 
-            // jobLabel0
-            // 
-            this.jobLabel0.AutoSize = true;
-            this.jobLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jobLabel0.ForeColor = System.Drawing.Color.White;
-            this.jobLabel0.Location = new System.Drawing.Point(113, 62);
-            this.jobLabel0.Name = "jobLabel0";
-            this.jobLabel0.Size = new System.Drawing.Size(76, 25);
-            this.jobLabel0.TabIndex = 2;
-            this.jobLabel0.Text = "Jungle";
-            // 
-            // levelLabel0
-            // 
-            this.levelLabel0.AutoSize = true;
-            this.levelLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.levelLabel0.ForeColor = System.Drawing.Color.White;
-            this.levelLabel0.Location = new System.Drawing.Point(495, 28);
-            this.levelLabel0.Name = "levelLabel0";
-            this.levelLabel0.Size = new System.Drawing.Size(100, 25);
-            this.levelLabel0.TabIndex = 4;
-            this.levelLabel0.Text = "Level: 17";
-            // 
-            // kdaLabel0
-            // 
-            this.kdaLabel0.AutoSize = true;
-            this.kdaLabel0.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.kdaLabel0.ForeColor = System.Drawing.Color.White;
-            this.kdaLabel0.Location = new System.Drawing.Point(195, 62);
-            this.kdaLabel0.Name = "kdaLabel0";
-            this.kdaLabel0.Size = new System.Drawing.Size(72, 25);
-            this.kdaLabel0.TabIndex = 3;
-            this.kdaLabel0.Text = "12/6/8";
+            this.backplate0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.backplate0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.backplate0.Location = new System.Drawing.Point(8, 5);
+            this.backplate0.Name = "backplate0";
+            this.backplate0.Size = new System.Drawing.Size(920, 105);
+            this.backplate0.TabIndex = 20;
+            this.backplate0.TabStop = false;
             // 
             // graphTab
             // 
@@ -573,6 +606,17 @@
             this.graphTab.TabIndex = 2;
             this.graphTab.Text = "Graphs";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(11, 170);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(66, 25);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Filter";
+            // 
             // supportCheck
             // 
             this.supportCheck.AutoSize = true;
@@ -580,12 +624,13 @@
             this.supportCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.supportCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.supportCheck.ForeColor = System.Drawing.Color.White;
-            this.supportCheck.Location = new System.Drawing.Point(81, 212);
+            this.supportCheck.Location = new System.Drawing.Point(81, 230);
             this.supportCheck.Name = "supportCheck";
             this.supportCheck.Size = new System.Drawing.Size(85, 24);
             this.supportCheck.TabIndex = 12;
             this.supportCheck.Text = "Support";
             this.supportCheck.UseVisualStyleBackColor = true;
+            this.supportCheck.CheckStateChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
             // 
             // adcCheck
             // 
@@ -594,12 +639,13 @@
             this.adcCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.adcCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.adcCheck.ForeColor = System.Drawing.Color.White;
-            this.adcCheck.Location = new System.Drawing.Point(162, 182);
+            this.adcCheck.Location = new System.Drawing.Point(162, 200);
             this.adcCheck.Name = "adcCheck";
             this.adcCheck.Size = new System.Drawing.Size(62, 24);
             this.adcCheck.TabIndex = 11;
             this.adcCheck.Text = "ADC";
             this.adcCheck.UseVisualStyleBackColor = true;
+            this.adcCheck.CheckStateChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
             // 
             // jungleCheck
             // 
@@ -608,12 +654,13 @@
             this.jungleCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.jungleCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jungleCheck.ForeColor = System.Drawing.Color.White;
-            this.jungleCheck.Location = new System.Drawing.Point(81, 182);
+            this.jungleCheck.Location = new System.Drawing.Point(81, 200);
             this.jungleCheck.Name = "jungleCheck";
             this.jungleCheck.Size = new System.Drawing.Size(75, 24);
             this.jungleCheck.TabIndex = 10;
             this.jungleCheck.Text = "Jungle";
             this.jungleCheck.UseVisualStyleBackColor = true;
+            this.jungleCheck.CheckStateChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
             // 
             // midCheck
             // 
@@ -622,12 +669,13 @@
             this.midCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.midCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.midCheck.ForeColor = System.Drawing.Color.White;
-            this.midCheck.Location = new System.Drawing.Point(162, 150);
+            this.midCheck.Location = new System.Drawing.Point(162, 168);
             this.midCheck.Name = "midCheck";
             this.midCheck.Size = new System.Drawing.Size(53, 24);
             this.midCheck.TabIndex = 9;
             this.midCheck.Text = "Mid";
             this.midCheck.UseVisualStyleBackColor = true;
+            this.midCheck.CheckStateChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
             // 
             // topCheck
             // 
@@ -636,12 +684,13 @@
             this.topCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.topCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.topCheck.ForeColor = System.Drawing.Color.White;
-            this.topCheck.Location = new System.Drawing.Point(81, 152);
+            this.topCheck.Location = new System.Drawing.Point(81, 170);
             this.topCheck.Name = "topCheck";
             this.topCheck.Size = new System.Drawing.Size(55, 24);
             this.topCheck.TabIndex = 8;
             this.topCheck.Text = "Top";
             this.topCheck.UseVisualStyleBackColor = true;
+            this.topCheck.CheckStateChanged += new System.EventHandler(this.dataSelect_SelectedIndexChanged);
             // 
             // colorSelect
             // 
@@ -660,7 +709,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(11, 119);
+            this.label3.Location = new System.Drawing.Point(11, 120);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 25);
             this.label3.TabIndex = 6;
@@ -683,7 +732,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(11, 69);
+            this.label2.Location = new System.Drawing.Point(11, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 25);
             this.label2.TabIndex = 4;
@@ -694,7 +743,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(14, 19);
+            this.label1.Location = new System.Drawing.Point(14, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 25);
             this.label1.TabIndex = 2;
@@ -727,24 +776,13 @@
             this.mainChart.Text = "chart1";
             this.mainChart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.Normal;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(14, 179);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(66, 25);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Filter";
-            // 
             // LeagueStats
             // 
             this.AcceptButton = this.searchButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.RoyalBlue;
+            this.BackColor = System.Drawing.Color.Maroon;
             this.ClientSize = new System.Drawing.Size(944, 501);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.AppName);
@@ -777,6 +815,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sumPic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sumPic0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.champPic0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.backplate0)).EndInit();
             this.graphTab.ResumeLayout(false);
             this.graphTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
@@ -841,6 +880,7 @@
         private System.Windows.Forms.CheckBox midCheck;
         private System.Windows.Forms.CheckBox topCheck;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox backplate0;
     }
 }
 
